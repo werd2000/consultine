@@ -1,0 +1,85 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+
+        <mat-card-header *ngIf="usuario">
+            <img mat-card-avatar [src]="usuario.img | imagen">
+            <mat-card-title *ngIf="usuario">{{ usuario.nombre }}</mat-card-title>
+            <mat-card-subtitle *ngIf="usuario">{{ usuario.email }} </mat-card-subtitle>
+            <span class="toolbar-spacer"></span>
+        </mat-card-header>
+
+        <mat-card-content *ngIf="usuario">
+            <form [formGroup]="forma" (ngSubmit)="guardar()" class="form-container">
+
+                <mat-form-field>
+                    <input formControlName="nombre" matInput placeholder="Nombre">
+                    <mat-error *ngIf="forma.controls.nombre.invalid">{{ error.campovacio }}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Role" formControlName="role">
+                        <mat-option *ngFor="let role of listaRoles" [value]="role">
+                            {{role}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input type="email" formControlName="email" matInput placeholder="Email">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select placeholder="Usuario de Google" formControlName="google">
+                        <mat-option *ngFor="let item of [true, false]" [value]="item">
+                            {{item | usuarioGoogle}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="row">
+                    <button mat-raised-button color="primary" *ngIf="!ver" class="w-50">
+                    <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                    Guardar
+                </button>
+
+                    <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50" (click)="cancelar()">
+                    <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                    Cancelar
+                </button>
+                </div>
+
+            </form>
+        </mat-card-content>
+
+        <div class="row">
+            <button mat-raised-button color="primary" *ngIf="ver" (click)="editarUsuario()" class="w-50">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                Editar
+            </button>
+            <button mat-raised-button color="accent" *ngIf="ver" (click)="imprimirUsuario()" class="w-50">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Imprimir icon">print</mat-icon>
+                Imprimir
+            </button>
+        </div>
+
+
+    </mat-card>
+
+    <mat-card class="foto-principal" *ngIf="usuario">
+        <mat-card-content>
+            <img *ngIf="!imagenTemp" [src]="usuario.img | imagen" class="foto-perfil">
+            <img *ngIf="imagenTemp" [src]="imagenTemp" class="foto-perfil">
+            <button *ngIf="!usuario.google" class="w-100 mb-5" mat-raised-button type="button" onclick="document.getElementById('fileToUpload').click()">
+                    Seleccionar foto
+                    <mat-icon class="toolbar-icon">add_photo_alternate</mat-icon>
+            </button>
+            <input (change)="seleccionImagen($event.target.files[0])" id="fileToUpload" type="file" style="display:none;">
+            <!-- <input (change)="seleccionImagen($event.target.files[0])" type="file" class="mb-3"> -->
+            <button *ngIf="!usuario.google" mat-raised-button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="w-100">
+                <i class="fa fa-save"></i>
+                Actualizar foto
+            </button>
+        </mat-card-content>
+    </mat-card>
+
+</div>

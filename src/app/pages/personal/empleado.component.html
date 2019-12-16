@@ -1,0 +1,87 @@
+<mat-card class="example-card">
+
+    <mat-card-header *ngIf="empleado" class="color-bck-profesionales bradius p-1">
+        <img mat-card-avatar [src]="empleado.img | imagen">
+        <mat-card-title *ngIf="empleado">{{ empleado.getNombreCompleto() }}</mat-card-title>
+        <mat-card-subtitle *ngIf="!cargando">Actualizado el {{ empleado.actualizadoEl | date:'dd-MM-yyyy'}} por {{ actualizadoPor.nombre }} </mat-card-subtitle>
+        <span class="toolbar-spacer"></span>
+
+        <!-- HERRAMIENTAS -->
+        <app-btn-volver [modelo]="'mat-icon'"></app-btn-volver>
+        <button mat-icon-button matTooltip="Turnos" (click)="verTurnos()">
+            <mat-icon aria-hidden="false" aria-label="Turnos icon">
+                <i class="material-icons">alarm</i>
+            </mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Imprimir" (click)="imprimirEmpleado()">
+            <mat-icon aria-hidden="false" aria-label="Imprimir icon">
+                print
+            </mat-icon>
+        </button>
+        <button *ngIf="modo === 'ver'" mat-icon-button matTooltip="Editar" (click)="editarEmpleado()">
+            <mat-icon aria-hidden="false" aria-label="Editar icon">
+                edit
+            </mat-icon>
+        </button>
+        <button *ngIf="modo === 'editar'" mat-icon-button matTooltip="Ver" (click)="verEmpleado()">
+            <mat-icon aria-hidden="false" aria-label="Ver icon">
+                remove_red_eye
+            </mat-icon>
+        </button>
+        <!-- FIN HERRAMIENTAS -->
+        
+    </mat-card-header>
+
+    <mat-card-content *ngIf="empleado">
+        <mat-tab-group [selectedIndex]="tabActual" (selectedTabChange)="cambioTab($event)">
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">person</mat-icon>
+                    Datos Principales
+                </ng-template>
+                <app-empleado-principal *ngIf="empleado" [empleado]="empleado" [modo]="modo"></app-empleado-principal>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">home</mat-icon>
+                    Domicilio
+                </ng-template>
+                <app-domicilio [persona]="empleado" tipo="empleado" [modo]="modo"></app-domicilio>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">contact_phone</mat-icon>
+                    Contactos
+                </ng-template>
+                <app-contacto [persona]="empleado" tipo="empleado" [modo]="modo"></app-contacto>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">supervised_user_circle</mat-icon>
+                    Familia
+                </ng-template>
+                <app-familia [persona]="empleado" tipo="empleado" [modo]="modo"></app-familia>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="far fa-id-card paciente-tab-icon"></i> S. Social
+                </ng-template>
+                <app-ssocial [persona]="empleado" tipo="empleado" [modo]="modo"></app-ssocial>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">work</mat-icon>
+                    Profesión
+                </ng-template>
+                <app-profesion [persona]="empleado" tipo="empleado" [modo]="modo"></app-profesion>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

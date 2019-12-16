@@ -1,0 +1,60 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+
+        <mat-card-content *ngIf="listaFamiliares">
+            <form [formGroup]="formaFamilia" (ngSubmit)="guardar()" class="form-container">
+
+                <div formArrayName="familiares">
+                    <div class="form-group row" *ngFor="let familia of formaFamilia.controls['familiares'].controls; let i = index" [formGroupName]=i>
+
+                        <mat-form-field class="w-25">
+                            <mat-select placeholder="Relación" formControlName="relacion">
+                                <mat-option *ngFor="let rel of relaciones" [value]="rel">
+                                    {{rel}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-25">
+                            <input formControlName="apellido" matInput placeholder="Apellido">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-25">
+                            <input formControlName="nombre" matInput placeholder="Nombre">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-25">
+                            <input formControlName="nroDoc" matInput placeholder="DNI">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-100">
+                            <input formControlName="observaciones" matInput placeholder="Observaciones">
+                        </mat-form-field>
+
+                        <button mat-button (click)=quitarFamilia(i) aria-label="Close" type="button" *ngIf="cantFamiliares > 1 && !ver">
+                            <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Delete icon">delete</mat-icon>
+                        </button>
+
+
+                    </div>
+                    <a mat-button color="primary" (click)="agregarFamilia()" *ngIf="!ver">Agregar nuevo familiar +</a>
+                    <div class="row">
+                        <button mat-raised-button color="primary" *ngIf="!ver" class="w-50">
+                          <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                          Guardar
+                        </button>
+
+                        <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50" (click)="cancelar()">
+                          <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                          Cancelar
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

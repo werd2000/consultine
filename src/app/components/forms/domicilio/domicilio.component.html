@@ -1,0 +1,71 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+
+        <mat-card-content *ngIf="domicilio">
+            <form [formGroup]="formaDomicilio" (ngSubmit)="guardar()" class="form-container">
+
+                <div class="row">
+                    <mat-form-field class="w-50">
+                        <input formControlName="calle" matInput placeholder="Calle">
+                        <mat-error *ngIf="formaDomicilio.controls['calle'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-50">
+                        <input formControlName="casa" matInput placeholder="Casa Nº">
+                        <mat-error *ngIf="formaDomicilio.controls['casa'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="barrio" matInput placeholder="Barrio">
+                        <mat-error *ngIf="formaDomicilio.controls['barrio'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-75">
+                        <input formControlName="ciudad" matInput placeholder="Ciudad">
+                    </mat-form-field>
+
+                    <mat-form-field class="w-25">
+                        <input formControlName="cp" matInput placeholder="C.P.">
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="provincia" matInput placeholder="Provincia">
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="pais" matInput placeholder="País">
+                    </mat-form-field>
+                </div>
+
+                <div  class="row">
+                    <button mat-raised-button color="primary" *ngIf="!ver" class="w-50">
+                      <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                      Guardar
+                  </button>
+
+                    <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50" (click)="cancelar()">
+                      <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                      Cancelar
+                  </button>
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="foto-principal">
+        <mat-card-content>
+            <app-maps [lng]="domicilio.lng" [lat]="domicilio.lat"></app-maps>
+        </mat-card-content>
+    </mat-card>
+</div>

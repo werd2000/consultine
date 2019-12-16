@@ -1,0 +1,101 @@
+<mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
+
+<!-- <app-personal></app-personal> -->
+
+<mat-card-content class="dashboard">
+  <div class="dashboard-card pacientes-b-card">
+    <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon matListIcon class="icon-title-card color-pacientes">people</mat-icon>
+            Pacientes
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{cantPacientes}} Pacientes en la base de datos.
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button (click)="crearNuevoPaciente()" class="color-bck-pacientes">
+            Nuevo paciente
+            <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nuevo Paciente icon">person_add</mat-icon>
+          </button>
+        </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-card profesionales-b-card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon matListIcon class="icon-title-card color-profesionales">people_outline</mat-icon>
+          Profesionales
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{cantPersonal}} Profesionales en la base de datos.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="crearNuevoProfesional()" class="color-bck-profesionales">
+              Nuevo profesional
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nuevo Paciente icon">person_add</mat-icon>
+            </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-card turnos-b-card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon matListIcon class="icon-title-card color-turnos">calendar_today</mat-icon>
+          Turnos
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{cantTurnos}} Turnos hoy.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="crearNuevoTurno()" class="color-bck-turnos">
+              Nuevo turno
+              <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nuevo turno icon">
+                today
+              </mat-icon>
+          </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="dashboard-card areas-b-card">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon matListIcon class="icon-title-card color-areas">business_center</mat-icon>
+          Áreas
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{cantAreas}} Áreas en el Instituto.
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+          <button mat-raised-button (click)="crearNuevaArea()" class="color-bck-areas">
+            Nueva Area
+            <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nueva area icon">
+                business_center
+            </mat-icon>
+          </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+
+</mat-card-content>
+
+<app-pacientes></app-pacientes>

@@ -1,0 +1,48 @@
+<mat-card class="principal-container w-50 m-a">
+    <mat-card-header>
+        <!-- <div class="w-50">
+            <img mat-card-image src="assets/images/logo-tine.jpg" alt="Logo Empresa">
+        </div> -->
+        <mat-card-title>Ingresar</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form class="form-container">
+
+            <mat-form-field class="example-full-width">
+                <span matPrefix>
+                  <i class="material-icons">email</i>
+                  &nbsp;
+                </span>
+                <input type="email" matInput placeholder="Correo electrónico">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <span matPrefix>
+                  <i class="material-icons">vpn_key</i>
+                  &nbsp;
+                </span>
+                <input type="password" matInput placeholder="Contraseña">
+            </mat-form-field>
+
+            <mat-checkbox>Check me!</mat-checkbox>
+
+            <button mat-raised-button color="primary">
+                Ingresar
+            </button>
+
+            <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button> -->
+            <div class="w-100">
+                <label>O ingrese usando su cuenta de </label>
+                <span style="font-size: 2em; color: Tomato;" class="ml-1">
+                  <button (click)=" login( 'google') " type="button " id="btnGoogle " class="btn btn-outline-danger">
+                    <i class="fab fa-google"></i> oogle
+                  </button>
+                </span>
+            </div>
+            <hr>
+            <p class="mt-3 mb-3 text-muted ">¿No estás registrado? <a routerLink="/register">Creá una cuenta</a></p>
+            <p class="mt-5 mb-3 text-muted ">© 2017-2018</p>
+        </form>
+    </mat-card-content>
+</mat-card>

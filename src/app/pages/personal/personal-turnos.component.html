@@ -1,0 +1,86 @@
+<mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
+
+<mat-card class="example-card" *ngIf="!cargando">
+
+  <mat-card-header>
+      <img mat-card-avatar [src]="personal?.img | imagen">
+      <mat-card-title>{{ personal?.getNombreCompleto() }}</mat-card-title>
+      <mat-card-subtitle>{{ personal | personal: 'profesion' }} </mat-card-subtitle>
+      <span class="toolbar-spacer"></span>
+      
+        <button mat-icon-button (click)="csvLista()" matTooltip="CSV">
+            <mat-icon aria-hidden="false" aria-label="CSV icon">
+                archive
+            </mat-icon>
+        </button>
+        <button mat-icon-button (click)="copiarLista()" matTooltip="Copiar">
+            <mat-icon aria-hidden="false" aria-label="Copiar icon">
+                file_copy
+            </mat-icon>
+        </button>
+        <button mat-icon-button (click)="exportarPdf()" matTooltip="PDF">
+            <mat-icon aria-hidden="false" aria-label="Export Pdf icon">
+                description
+            </mat-icon>
+        </button>
+        <button mat-icon-button (click)="imprimir()" matTooltip="Imprimir">
+            <mat-icon aria-hidden="false" aria-label="Imprimir icon">
+                print
+            </mat-icon>
+        </button>
+      
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+    </mat-form-field>
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="fechaInicio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              {{ element.fechaInicio | date: "dd-MM-yyyy" }}
+          </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="paciente">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Paciente </mat-header-cell>
+          <mat-cell *matCellDef="let element">{{ element.paciente | nyaPaciente  }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="duracion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Duración </mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.duracion }}</mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="estado">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+          <mat-cell *matCellDef="let element" [ngClass]="element.estado | lowercase">{{ element.estado }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              <button mat-icon-button >
+                  <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Ver icon">remove_red_eye</mat-icon>
+              </button>
+              <button mat-icon-button >
+                  <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Editar icon">edit</mat-icon>
+              </button>
+              <button mat-icon-button >
+                  <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Eliminar icon">delete</mat-icon>
+              </button>
+          </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>

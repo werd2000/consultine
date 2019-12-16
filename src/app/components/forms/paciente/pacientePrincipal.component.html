@@ -1,0 +1,129 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+
+        <mat-card-content *ngIf="paciente">
+            <form [formGroup]="forma" (ngSubmit)="guardar()" class="form-container">
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <mat-select formControlName="estado" placeholder="Estado">
+                            <mat-option *ngFor="let estado of listaEstadosPacientes" [value]="estado">
+                                {{ estado }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-25">
+                        <mat-select placeholder="Tipo Doc." formControlName="tipo_doc">
+                            <mat-option *ngFor="let tipoDoc of listaTipoDoc" [value]="tipoDoc">
+                                {{tipoDoc}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-75">
+                        <input formControlName="nro_doc" matInput placeholder="Nro. Doc.">
+                        <mat-error *ngIf="forma.controls['nro_doc'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="apellido" matInput placeholder="Apellido">
+                        <mat-error *ngIf="forma.controls['apellido'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="nombre" matInput placeholder="Nombre">
+                        <mat-error *ngIf="forma.controls['nombre'].invalid">{{ error.campovacio }}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <mat-select placeholder="Sexo" formControlName="sexo">
+                            <mat-option *ngFor="let sexo of listaSexos" [value]="sexo">
+                                {{sexo}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <input formControlName="nacionalidad" matInput placeholder="Nacionalidad">
+                    </mat-form-field>
+                </div>
+
+                <div  class="row">
+                    <mat-form-field class="w-75">
+                        <input matInput formControlName="fecha_nac" [matDatepicker]="fechaNac" placeholder="Fecha de nacimiento" (dateChange)="calcularEdad($event)">
+                        <mat-datepicker-toggle matSuffix [for]="fechaNac"></mat-datepicker-toggle>
+                        <mat-datepicker #fechaNac value="paciente.fechaNac"></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-25">
+                        <input matInput [value]="edad" placeholder="Edad" disabled>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="w-100">
+                        <textarea formControlName="observaciones" matInput placeholder="Observaciones" rows="3"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div  class="row">
+                    <mat-form-field class="w-50">
+                        <input formControlName="fecha_alta" matInput [matDatepicker]="fecha_alta" placeholder="Fecha de ingreso">
+                        <mat-datepicker-toggle matSuffix [for]="fecha_alta"></mat-datepicker-toggle>
+                        <mat-datepicker #fecha_alta></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-50">
+                        <input formControlName="fecha_baja" matInput [matDatepicker]="fecha_baja" placeholder="Fecha de egreso">
+                        <mat-datepicker-toggle matSuffix [for]="fecha_baja"></mat-datepicker-toggle>
+                        <mat-datepicker #fecha_baja></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <button mat-raised-button color="primary" *ngIf="!ver" class="w-50 m-1">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                        Guardar
+                    </button>
+
+                    <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50 m-1" (click)="cancelar()">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                        Cancelar
+                    </button>
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="foto-principal">
+        <mat-card-content>
+            <img *ngIf="!imagenTemp" [src]="paciente.img | imagen" class="foto-perfil">
+            <img *ngIf="imagenTemp" [src]="imagenTemp" class="foto-perfil">
+            <button class="w-100 mb-5" mat-raised-button type="button" onclick="document.getElementById('fileToUpload').click()">
+                <!-- <label for="fileToUpload"> -->
+                    Seleccionar foto
+                    <mat-icon class="toolbar-icon">add_photo_alternate</mat-icon>
+                <!-- </label> -->
+            </button>
+            <input (change)="seleccionImagen($event.target.files[0])" id="fileToUpload" type="file" style="display:none;">
+            <button mat-raised-button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="w-100">
+                <i class="fa fa-save"></i>
+                Actualizar foto
+            </button>
+        </mat-card-content>
+    </mat-card>
+</div>

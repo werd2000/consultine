@@ -1,0 +1,78 @@
+<!-- Modal Area -->
+<!-- <app-area></app-area> -->
+<!-- Fin Modal Area -->
+
+<mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
+
+<mat-card>
+
+    <mat-toolbar class="color-bck-areas">
+        <mat-toolbar-row>
+            <span>Áreas</span>
+            <span class="toolbar-spacer"></span>
+            <button mat-icon-button (click)="csvLista()">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="CSV icon">
+                    <i class="fas fa-file-archive"></i>
+                </mat-icon>
+            </button>
+            <button mat-icon-button (click)="copiarLista()">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Copiar icon">file_copy</mat-icon>
+            </button>
+            <button mat-icon-button (click)="exportarPdf()">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Export Pdf icon">
+                    <i class="fas fa-file-pdf"></i>
+                </mat-icon>
+            </button>
+            <button mat-icon-button (click)="imprimir()">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Imprimir icon">print</mat-icon>
+            </button>
+            <button mat-icon-button (click)="crearNuevaArea()" color="accent">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nuevo Paciente icon">business_center</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="area">
+                <mat-header-cell *matHeaderCellDef> Area </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{ element.area }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="observaciones">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.observaciones }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="ver(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Ver icon">remove_red_eye</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="editar(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Editar icon">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="eliminar(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Eliminar icon">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </mat-card-content>
+    
+</mat-card>

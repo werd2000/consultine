@@ -1,0 +1,53 @@
+<mat-card class="mat-card-turnos" [ngStyle]="{'height': turno.duracion * 2 + 'px', 'top': turno.top}" style="position: absolute; width: inherit">
+              
+  <mat-card-header *ngIf="turno.paciente" class="turnos-header" [ngClass]="turno.estilo">
+      <div class="col-4">
+        <img mat-card-avatar [src]="turno.paciente.img | imagen" class="card-img-turnos">
+      </div>
+      
+      <div class="col-6" style="overflow: hidden;">
+        <mat-card-title *ngIf="turno.paciente" class="card-title-turnos">
+            {{ turno.paciente.apellido }} {{ turno.paciente.nombre }}
+        </mat-card-title>
+      </div>
+
+      <div class="col-2">
+        <button mat-button [matMenuTriggerFor]="menuTurno" class="menu-turno">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menuTurno="matMenu">
+          <button mat-menu-item color="warn" aria-label="Eliminar turno" (click)="eliminarTurno(turno)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-menu-item color="warn" aria-label="Turno realizado" (click)="marcarRealizado(turno)">
+            <mat-icon>done</mat-icon>
+          </button>
+        </mat-menu>
+      </div>      
+  </mat-card-header>
+
+  <mat-card-content *ngIf="turno" class="pointer">
+    <div (click)="editarTurno(turno)">
+      <p>Hora: {{ turno.horaInicio }}</p>
+      <!-- <p class="text-muted">{{ turno.estado }}</p> -->
+    </div>
+    <!-- <div class="w-10">
+      <button mat-button [matMenuTriggerFor]="menuTurno" class="menu-turno">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menuTurno="matMenu">
+        <button mat-menu-item color="warn" aria-label="Eliminar turno" (click)="eliminarTurno(turno)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-menu-item color="warn" aria-label="Turno realizado" (click)="marcarRealizado(turno)">
+          <mat-icon>done</mat-icon>
+        </button>
+      </mat-menu>
+    </div> -->
+  </mat-card-content>
+
+  <mat-card-actions>    
+    
+  </mat-card-actions>
+
+</mat-card>

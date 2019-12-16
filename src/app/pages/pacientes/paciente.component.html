@@ -1,0 +1,104 @@
+<mat-card class="pacientes">
+
+    <mat-card-header *ngIf="paciente"  class="color-bck-pacientes p-1 bradius">
+        <img mat-card-avatar [src]="paciente.img | imagen">
+        <mat-card-title>{{ nombrePaciente }}</mat-card-title>
+        <mat-card-subtitle class="mt-1" *ngIf="!cargando">Actualizado el {{ paciente.actualizadoEl | date:'dd-MM-yyyy'}} por {{ actualizadoPor.nombre }} </mat-card-subtitle>
+        <span class="toolbar-spacer"></span>
+
+        <!-- HERRAMIENTAS -->
+        <div class="botonera">
+            <app-btn-volver [modelo]="'mat-icon'"></app-btn-volver>
+            <button mat-icon-button matTooltip="Turnos" (click)="verTurnos()">
+                <mat-icon aria-hidden="false" aria-label="Turnos icon">
+                    <i class="material-icons">alarm</i>
+                </mat-icon>
+            </button>
+            <button [matMenuTriggerFor]="belowMenu" mat-icon-button matTooltip="Imprimir">
+                <mat-icon aria-hidden="false" aria-label="Imprimir icon">
+                    print
+                </mat-icon>
+            </button>
+            <mat-menu #belowMenu="matMenu" yPosition="below">
+                <button mat-menu-item (click)="imprimirPaciente()">
+                    <mat-icon aria-hidden="false" aria-label="Imprimir icon">
+                        perm_identity
+                    </mat-icon>
+                    Datos del paciente
+                </button>
+                <button mat-menu-item (click)="constanciaTratamiento()">
+                    <mat-icon aria-hidden="false" aria-label="Imprimir icon">
+                        event_note
+                    </mat-icon>
+                    Constancia de tratamiento
+                </button>
+            </mat-menu>
+            <button *ngIf="modo === 'ver'" mat-icon-button matTooltip="Editar" (click)="editarPaciente()">
+                <mat-icon aria-hidden="false" aria-label="Editar icon">
+                    edit
+                </mat-icon>
+            </button>
+            <button *ngIf="modo === 'editar'" mat-icon-button matTooltip="Ver" (click)="verPaciente()">
+                <mat-icon aria-hidden="false" aria-label="Ver icon">
+                    remove_red_eye
+                </mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Informes">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Informes icon">
+                    <i class="fas fa-file-prescription paciente-tab-icon"></i>
+                </mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Salud">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Salud icon">
+                    <i class="fas fa-heartbeat paciente-tab-icon"></i>
+                </mat-icon>
+            </button>
+        </div>
+        <!-- FIN HERRAMIENTAS -->
+    </mat-card-header>
+
+    <mat-card-content *ngIf="paciente">
+        <mat-tab-group [selectedIndex]="tabActual" (selectedTabChange)="cambioTab($event)">
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">person</mat-icon>
+                    Datos Principales
+                </ng-template>
+                <app-paciente-principal *ngIf="paciente" (imprimir)="imprimir($event)" [paciente]="paciente" [modo]="modo"></app-paciente-principal>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">home</mat-icon>
+                    Domicilio
+                </ng-template>
+                <app-domicilio (imprimir)="imprimir($event)" [persona]="paciente" tipo="paciente" [modo]="modo"></app-domicilio>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">contact_phone</mat-icon>
+                    Contactos
+                </ng-template>
+                <app-contacto [persona]="paciente" tipo="paciente" [modo]="modo"></app-contacto>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="paciente-tab-icon">supervised_user_circle</mat-icon>
+                    Familia
+                </ng-template>
+                <app-familia (imprimir)="imprimir($event)" [persona]="paciente" tipo="paciente" [modo]="modo"></app-familia>
+            </mat-tab>
+
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <i class="far fa-id-card paciente-tab-icon"></i> S. Social
+                </ng-template>
+                <app-ssocial (imprimir)="imprimir($event)" [persona]="paciente" tipo="paciente" [modo]="modo"></app-ssocial>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

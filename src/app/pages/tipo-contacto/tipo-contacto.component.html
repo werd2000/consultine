@@ -1,0 +1,48 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+  
+        <mat-card-header *ngIf="tipo">
+            <!-- <img mat-card-avatar [src]="usuario.img | imagen"> -->
+            <mat-card-title *ngIf="area">{{ area.area }}</mat-card-title>
+            <!-- <mat-card-subtitle *ngIf="usuario">{{ usuario.email }} </mat-card-subtitle> -->
+            <span class="toolbar-spacer"></span>
+        </mat-card-header>
+  
+        <mat-card-content *ngIf="tipo">
+            <form [formGroup]="forma" (ngSubmit)="guardar()" class="form-container">
+  
+                <mat-form-field>
+                    <input formControlName="tipo" matInput placeholder="Tipo de contacto">
+                    <mat-error *ngIf="forma.controls.tipo.invalid">{{ error.campovacio }}</mat-error>
+                </mat-form-field>
+  
+                <mat-form-field>
+                    <input formControlName="observaciones" matInput placeholder="Observaciones">
+                </mat-form-field>
+  
+                <div class="row">
+                    <button mat-raised-button color="primary" *ngIf="!ver" class="w-50">
+                    <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                    Guardar
+                </button>
+  
+                    <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50" (click)="cancelar()">
+                    <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                    Cancelar
+                </button>
+                </div>
+  
+            </form>
+        </mat-card-content>
+  
+        <div class="row">
+            <button mat-raised-button color="primary" *ngIf="ver" (click)="editarTipo()" class="w-100">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Editar icon">edit</mat-icon>
+                Editar
+            </button>
+        </div>
+  
+  
+    </mat-card>
+  
+  </div>

@@ -1,0 +1,554 @@
+:root {
+    --color-pacientes: mediumblue;
+    --color-profesionales: red;
+    --color-turnos: green;
+    --color-areas: orange;
+    --color-grey-ligth: #ececec;
+    --color-grey: #666666;
+    --space: 10px;
+    --radius: 4px;
+}
+
+body {
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+    font-size: .875rem !important;
+}
+
+footer {
+    /* margin-top: var(--space); */
+    width: 100%;
+    background-color: var(--color-grey-ligth);
+    height: calc(var(--space)*3);
+    text-align: center;
+    color: var(--color-grey);
+    font-size: .9em;
+    line-height: calc(var(--space) / 2);
+}
+
+.row {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+[class*=col-] {
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+.col-8 {
+    width: 66.66666667%;
+}
+.col-7 {
+    width: 58.33333333%;
+}
+.col-6 {
+    width: 50%;
+}
+
+.col-5 {
+    width: 41.66666667%;
+}
+
+.col-4 {
+    width: 33.33333333%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-2 {
+    width: 16.66666667%;
+}
+
+.col-1 {
+    width: 8.33333333%;
+}
+
+.basic-container {
+    padding: 30px;
+}
+
+.version-info {
+    font-size: 8pt;
+    float: right;
+}
+
+.foto-sm {
+    width: 40px;
+}
+
+.alta {
+    color: brown;
+}
+
+.espera {
+    color: red;
+}
+
+.tratamiento {
+    color: green;
+}
+
+.evaluacion {
+    color: blue;
+}
+
+[class*=w-] {
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+/* COLORES */
+.color-pacientes {
+    color: var(--color-pacientes);
+}
+
+.color-profesionales {
+    color: var(--color-profesionales);
+}
+
+.color-turnos {
+    color: var(--color-turnos);
+}
+
+.color-areas {
+    color: var(--color-areas);
+}
+
+/* COLORES BCK */
+.color-bck-pacientes {
+    background-color: var(--color-pacientes) !important;
+    color: white !important;
+}
+
+.color-bck-profesionales {
+    background-color: var(--color-profesionales) !important;
+    color: white !important;
+}
+
+.color-bck-turnos {
+    background-color: var(--color-turnos) !important;
+    color: white !important;
+}
+
+.color-bck-areas {
+    background-color: var(--color-areas) !important;
+    color: white !important;
+}
+
+/* CARDS */
+.icon-title-card {
+    vertical-align: bottom;
+}
+
+.pacientes.mat-card{
+    margin-bottom: calc(var(--space) * 2);
+}
+
+.profesionales.mat-card{
+    margin-bottom: calc(var(--space) * 2);
+}
+
+/* WIDTHS */
+.w-100 {
+    width: 100%;
+}
+
+.w-90 {
+    width: 90% !important;
+}
+
+.w-75 {
+    width: 74% !important;
+}
+
+.w-66 {
+    width: 66% !important;
+}
+
+.w-50 {
+    width: 50% !important;
+}
+
+.w-33 {
+    width: 33% !important;
+}
+
+.w-25 {
+    width: 24% !important;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+/* FIN WIDTHS */
+
+/* MARGINS */
+.mr-4 {
+    margin-right: 4%;
+}
+
+.mr-2 {
+    margin-right: 2% !important;
+}
+
+.m-a {
+    margin: auto;
+}
+
+.m-1 {
+    margin: var(--space) !important;
+}
+
+.mr-2px {
+    margin-right: 2px !important;
+}
+
+.ml-5px {
+    margin-left: 5px !important;
+}
+
+.mb-5 {
+    margin-bottom: 5px !important;
+}
+/* FIN MARGINS */
+
+/* PADDINGS */
+.p-1 {
+    padding: var(--space) !important;
+}
+
+.p-2 {
+    padding: var(--space * 2) !important;
+}
+/* FIN PADDINGS */
+
+/* BORDER */
+.bradius {
+    border-radius: var(--radius);
+}
+
+/* DASHBOARD */
+.dashboard {
+    width: 100%;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.dashboard-card {
+    width: 300px;
+    height: 100%;
+    flex-shrink: 0;
+}
+
+.dashboard .pacientes-b-card {
+    border-bottom: var(--color-pacientes) 3px solid;
+}
+
+
+.dashboard .profesionales-b-card {
+    border-bottom: var(--color-profesionales) 3px solid;
+}
+
+.dashboard .turnos-b-card {
+    border-bottom: var(--color-turnos) 3px solid;
+}
+
+.dashboard .areas-b-card {
+    border-bottom: var(--color-areas) 3px solid;
+}
+
+/* FIN DASHBOARD */
+
+/* PACIENTES */
+.pacientes .mat-card-subtitle {
+    color: white !important;
+}
+
+.principal-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+}
+
+.form-principal {
+    width: 75%;
+    -webkit-flex: 3 1 60%;
+    flex: 3 1 60%;
+    -webkit-order: 1;
+    order: 1;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-container>* {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.foto-perfil {
+    width: 100%;
+}
+
+.foto-principal {
+    width: 25%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+.toolbar-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "titulo-toolbar . botonera";
+    grid-gap: 10px;
+    width: inherit;
+}
+.toolbar-icon {
+    padding: 0 14px;
+    display: flex;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-cell,
+.mat-footer-cell {
+    font-size: 13px !important;
+}
+
+.turnos {
+    margin-top: 10px !important;
+    font-size: 0.9em !important;
+    width: 100%;
+    height: 1000px;
+}
+.turnos .ng-star-inserted {
+    width: inherit;
+}
+.turnos app-card-turno {
+    width: inherit;
+}
+
+.encabezado-turnos {
+    display: flex;
+    height: 50px;
+    margin-bottom: 2px;
+}
+
+.detalle-turnos {
+    display: flex;
+    height: 100vh;
+    background-color: #fafafa;
+}
+.turnos .mat-card-actions {
+    padding: 0px !important;
+    /* margin-left: -15px !important; */
+    position: absolute;
+    bottom: 9px;
+}
+
+.turnos .mat-card-content{
+    width: 100%;
+    padding: 2px;
+    margin: 0;
+    display: block;
+    box-sizing: border-box;
+}
+
+.mat-card-actions .menu-more{
+    height: 30px;
+    bottom: 5px;
+}
+
+.turnos-header .menu-turno {
+    min-width: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-turno {
+    width: 10px;
+    overflow: hidden;
+}
+
+.menu-turno span {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+  }
+
+.menu-turno span mat-icon {
+    margin: 0;
+    padding: 0;
+    left: -5px;
+    position: relative;
+    box-sizing: border-box;
+    width: 10px;
+}
+
+.turno-column {
+    border: .5px solid #ddd;
+    padding: 0;
+    height: 1000px ;
+}
+
+.turno-column-encabezado {
+    height: 50px;
+}
+
+.turno-column-encabezado mat-card{
+    background-color: #320b86;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 500;
+    padding: 1px;
+    height: 50px;
+}
+
+.turno-column-head {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.turno-column-data {
+    text-align: center;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-card-turnos {
+    padding: 0px !important;
+    margin-top: 1px;
+}
+
+.turnos-header {
+    /* padding: 3px !important;
+    border-top-left-radius: 4px !important;
+    border-top-right-radius: 4px !important; */
+    height: 40px;
+}
+
+.turnos-header img {
+    margin: 0;
+    padding: 0;
+}
+
+.card-title-turnos {
+    font-size: .9em !important;
+    padding: 0px;
+    font-weight: 600;
+    display: block !important;
+    overflow: hidden;
+    width: 100%;
+}
+.mat-card-header .mat-card-title {
+    /* margin: 0px !important; */
+    /* width: 100%; */
+}
+.mat-card-header-text {
+    margin: 0 !important;
+    font-size: .9em;
+}
+
+.mat-card-content p {
+    font-size: .9em;
+    margin: 0px;
+}
+
+.card-img-turnos {
+    width: 30px !important;
+    height: 30px !important;
+    align-self: center;
+}
+
+.separador-turnos {
+    position: relative;
+    top: 500px;
+    background-color: #320b86;
+    height: 1px;
+    width: 100%;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+}
+
+.turno-programado {
+   background-color: #673ab7 !important;
+   color: #ffffff;
+}
+
+.turno-reprogramado {
+    background-color: #AED6F1 !important;
+}
+
+.turno-demorado {
+    background-color: #c8a600 !important;
+}
+
+.turno-cancelo-paciente {
+    background-color: #ffd740 !important;
+}
+
+.turno-cancelo-profesional {
+    background-color: #ffff74 !important;
+}
+
+.turno-realizado {
+    background-color: #320b86 !important;
+    color: #ffffff;
+}
+
+.text-muted {
+    color: #444444;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.pointer {
+    cursor: pointer;
+}
+/* CAJAS */
+.box-flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Desktop First */
+
+@media screen and (max-width:1024px) {
+}
+
+@media screen and (max-width:768px) {
+}
+
+@media screen and (max-width:480px) {
+}
+
+@media screen and (max-width:320px) {
+}

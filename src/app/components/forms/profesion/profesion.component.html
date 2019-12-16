@@ -1,0 +1,65 @@
+<div class="principal-container">
+    <mat-card class="form-principal">
+
+        <mat-card-content *ngIf="listaProfesiones">
+
+            <form [formGroup]="formaProfesion" (ngSubmit)="guardar()" class="form-container">
+
+                <div formArrayName="profesiones">
+
+                    <div class="form-group row" *ngFor="let profesion of formaProfesion.controls['profesiones'].controls; let i = index" [formGroupName]=i>
+                        <mat-form-field class="w-50">
+                            <mat-select placeholder="Área" formControlName="area">
+                                <mat-option *ngFor="let area of listaAreas" [value]="area.area">
+                                    {{area.area}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-50">
+                            <input formControlName="titulo" matInput placeholder="Titulo">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-50">
+                            <input formControlName="institucion" matInput placeholder="Institución">
+                        </mat-form-field>
+
+                        <mat-form-field class="w-50">
+                            <input formControlName="fecha" matInput [matDatepicker]="fecha" placeholder="Fecha de otorgamiento">
+                            <mat-datepicker-toggle matSuffix [for]="fecha"></mat-datepicker-toggle>
+                            <mat-datepicker #fecha></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-50">
+                            <input formControlName="matProf" matInput placeholder="Matrícula">
+                        </mat-form-field>
+                        
+                        <mat-form-field class="w-50">
+                            <input formControlName="matProf" matInput placeholder="Matrícula">
+                        </mat-form-field>
+
+                        <button mat-button (click)=quitarProfesion(i) aria-label="Close" type="button" *ngIf="cantProfesion > 1 && !ver">
+                            <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Delete icon">delete</mat-icon>
+                        </button>
+
+                    </div>
+                    <a mat-button color="primary" (click)="agregarProfesion()" *ngIf="!ver">Agregar nueva profesión +</a>
+                    <div class="w-100">
+                        <button mat-raised-button color="primary" *ngIf="!ver" class="w-50">
+                          <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Guardar icon">save</mat-icon>
+                          Guardar
+                        </button>
+
+                        <button type="button" mat-raised-button color="accent" *ngIf="!ver" class="w-50" (click)="cancelar()">
+                          <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Cancelar icon">cancel</mat-icon>
+                          Cancelar
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+        </mat-card-content>
+
+    </mat-card>
+</div>

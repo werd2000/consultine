@@ -1,0 +1,62 @@
+
+<mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
+
+<mat-card>
+
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <span>Tipo de Contactos</span>
+            <span class="toolbar-spacer"></span>
+            
+            <button mat-icon-button (click)="crearNuevoTipo()" color="accent">
+                <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Nuevo Contacto icon">
+                    settings_cell
+                </mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="tipo">
+                <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    {{ element.tipo }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="observaciones">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </mat-header-cell>
+                <mat-cell *matCellDef="let element">{{ element.observaciones }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="ver(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Ver icon">remove_red_eye</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="editar(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Editar icon">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="eliminar(element)">
+                        <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Eliminar icon">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </mat-card-content>
+    
+</mat-card>

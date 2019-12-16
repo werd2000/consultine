@@ -1,0 +1,58 @@
+/* .form-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-container>* {
+    width: 100%;
+} */
+
+
+/* .form-principal {
+    width: 75%;
+    -webkit-flex: 3 1 60%;
+    flex: 3 1 60%;
+    -webkit-order: 1;
+    order: 1;
+} */
+
+.foto-principal {
+    width: 25%;
+    -webkit-flex: 1 6 20%;
+    flex: 1 6 20%;
+    -webkit-order: 1;
+    order: 1;
+}
+
+
+/* .principal-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row;
+    flex-flow: row;
+} */
+
+
+/* Too narrow to support three columns */
+
+@media all and (max-width: 640px) {
+    .principal-container {
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        width: 100%;
+    }
+    .foto-principal,
+    .form-principal {
+        /* Return them to document order */
+        -webkit-order: 0;
+        order: 0;
+        width: 100%
+    }
+}
+
+
+/* .foto-perfil {
+    width: 100%;
+    border-radius: 1%;
+} */

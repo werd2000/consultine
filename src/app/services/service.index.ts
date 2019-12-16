@@ -1,0 +1,27 @@
+export { MapService } from './map/map.service';
+export { ModalTurnoService } from './turnos/modalTurno.service';
+export { TurnosService } from './turnos/turnos.service';
+export { PrintAreaService } from './print/print.area.service';
+export { SubirArchivoService } from './upload/subir-archivo.service';
+export { ModalUploadService } from './upload/modal-upload.service';
+export { PrintPacienteService } from './print/print.paciente.service';
+export { PrintPersonalService } from './print/print.personal.service';
+export { ProfesionService } from './profesion/profesion.service';
+export { AreasService } from './area/area.service';
+export { PersonalService } from './personal/personal.service';
+export { SsocialService } from './ssocial/ssocial.service';
+export { FamiliaService } from './familia/familia.service';
+export { TipoContactoService } from './tipoContacto/tipo-contacto.service';
+export { DomicilioService } from './domicilio/domicilio.service';
+export { PrintUsuarioService } from './print/print.usuario.service';
+export { UsuarioService } from './usuario/usuario.service';
+export { FechaEdadService } from './fechaEdad/fecha-edad.service';
+export { SexoService } from './sexo/sexo.service';
+export { TipoDocService } from './tipoDoc/tipo-doc.service';
+export { CsvService } from './csv/csv.service';
+export { CopyService } from './copy/copy.service';
+export { EmpresaService } from './empresa/empresa.service';
+export { ExportPdfService } from './exportPdf/export-pdf.service';
+export { PrintService } from './print/print.service';
+export { PacienteService } from './paciente/paciente.service';
+
