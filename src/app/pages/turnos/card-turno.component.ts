@@ -34,13 +34,13 @@ export class CardTurnoComponent implements OnInit {
   ngOnInit() {
   }
 
-  editarTurno(t: Turno) {    
+  editarTurno(t: Turno) {
     const arrayT = [t];
     const dialogRef = this.dialog.open(AddTurnoComponent, {
       width: '50%',
       data: arrayT[0]
     });
-    dialogRef.afterClosed().subscribe(result => {      
+    dialogRef.afterClosed().subscribe(result => {
         this.actualizar.emit(true);
     });
   }
@@ -59,10 +59,32 @@ export class CardTurnoComponent implements OnInit {
         .then(resp => {
             sweetAlert ('Datos borrados', `Los datos del turno ${ t.paciente.apellido } se borraron correctamente`, 'success');
             this.actualizar.emit(true);
-        })
+        });
       }
     });
   }
 
-  
+  marcarRealizado(t: any) {
+    const turno = {
+      _id : t._id,
+      actualizado : t.actualizado,
+      area : t.area,
+      creacion : t.creacion,
+      creadoPor : t.creadoPor,
+      estado : 'REALIZADO',
+      fechaFin : t.fechaFin,
+      fechaInicio : t.fechaInicio,
+      horaFin : t.horaFin,
+      horaInicio : t.horaInicio,
+      idPaciente : t.idPaciente,
+      idProfesional : t.idProfesional,
+      observaciones : t.observaciones,
+      repetir : t.repetir,
+    };
+
+    console.log(turno);
+    this.turnosService.updateTurno(turno);
+  }
+
+
 }

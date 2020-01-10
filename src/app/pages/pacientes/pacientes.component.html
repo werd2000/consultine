@@ -72,9 +72,10 @@
             <ng-container matColumnDef="acciones">
                 <mat-header-cell *matHeaderCellDef> </mat-header-cell>
                 <mat-cell *matCellDef="let element">
-                    <button mat-icon-button (click)="ver(element)">
+                    <!-- <button mat-icon-button (click)="ver(element)"> -->
+                    <a mat-icon-button [routerLink]="[ '/paciente/', element._id ]" [queryParams]="{action: 'view'}">
                         <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Ver icon">remove_red_eye</mat-icon>
-                    </button>
+                    </a>
                     <button mat-icon-button (click)="editar(element)">
                         <mat-icon class="toolbar-icon" aria-hidden="false" aria-label="Editar icon">edit</mat-icon>
                     </button>

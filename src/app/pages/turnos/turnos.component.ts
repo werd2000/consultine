@@ -9,6 +9,7 @@ import { TurnosFunctions } from './turnos.functions';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS } from 'src/app/config/config';
+import { AddTurnoQuickComponent } from './add-turno-quick.component';
 
 @Component({
   selector: 'app-turnos',
@@ -98,7 +99,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
   }
 
   nuevo(): void {
-    const dialogRef = this.dialog.open(AddTurnoComponent, {
+    const dialogRef = this.dialog.open(AddTurnoQuickComponent, {
       width: '50%',
       data: this.fecha.format('YYYY-MM-DD')
     });
@@ -108,7 +109,6 @@ export class TurnosComponent implements OnInit, OnDestroy {
       }
       this.cargarTurnos();
     });
-
   }
 
   hoy() {
@@ -131,6 +131,28 @@ export class TurnosComponent implements OnInit, OnDestroy {
   cambiarFecha(event) {
     this.fecha = event.value;
     this.cargarTurnos();
+  }
+
+  imprimir() {
+    const printContents = document.getElementsByClassName('turnos')[0].innerHTML;
+    const w = window.open();
+    w.document.write('<html><head>');
+    w.document.write('<link href="../styles.css" rel="stylesheet">');
+    w.document.write('<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">');
+    w.document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">');
+    w.document.write('<link rel="stylesheet" href="assets/css/styles.css">');
+    w.document.write('<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">');
+    
+    w.document.write('</head><body>');
+    w.document.write('<mat-card>');
+    w.document.write(printContents);
+    w.document.write('</mat-card>');
+    w.document.write('</body></html>');
+    w.document.close(); // necessary for IE >= 10
+    w.focus(); // necessary for IE >= 10
+		//   w.print();
+		//   w.close();
+    // return true;
   }
 
 }

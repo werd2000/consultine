@@ -40,6 +40,7 @@ import { TurnosPacienteComponent } from './pacientes/turnos-paciente.component'
 import { CardTurnoComponent } from './turnos/card-turno.component';
 import { PersonalTurnosComponent } from './personal/personal-turnos.component';
 import { ConstanciaTratamientoComponent } from './pacientes/constancia-tratamiento.component';
+import { AddTurnoQuickComponent } from './turnos/add-turno-quick.component';
 
 
 @NgModule({
@@ -79,6 +80,7 @@ import { ConstanciaTratamientoComponent } from './pacientes/constancia-tratamien
     CardTurnoComponent,
     PersonalTurnosComponent,
     ConstanciaTratamientoComponent,
+    AddTurnoQuickComponent,
   ],
   exports: [
     // PagesComponent,

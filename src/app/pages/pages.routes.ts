@@ -16,6 +16,7 @@ import { TurnosComponent } from './turnos/turnos.component';
 import { AddTurnoComponent } from './turnos/add-turno.component';
 import { TurnosPacienteComponent } from './pacientes/turnos-paciente.component';
 import { PersonalTurnosComponent } from './personal/personal-turnos.component';
+import { AddTurnoQuickComponent } from './turnos/add-turno-quick.component';
 
 
 const PAGESROUTES: Routes = [
@@ -66,8 +67,8 @@ const PAGESROUTES: Routes = [
             { path: 'tipo-contacto/editar/:id', component: TipoContactoComponent, data: { titulo: 'Edición de contactos' } },
 
             { path: 'turnos', component: TurnosComponent, data: { titulo: 'Turnos' } },
-            { path: 'turno/:id', component: AddTurnoComponent, data: { titulo: 'Turnos' } },
-            
+            { path: 'turno/:id', component: AddTurnoQuickComponent, data: { titulo: 'Turnos' } },
+
             { path: 'turnos/paciente/:id', component: TurnosPacienteComponent, data: { titulo: 'Turnos del paciente' } },
             { path: 'turnos/personal/:id', component: PersonalTurnosComponent, data: { titulo: 'Turnos del personal' } },
 

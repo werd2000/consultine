@@ -39,9 +39,12 @@ export class PacienteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.url.subscribe( p => {
-      this.modo = p[1].path;
-    });
+    this.suscription.push(
+      this.activatedRoute.queryParams.subscribe( query => {
+        this.modo = query.action;
+      })
+    );
+
     this.activatedRoute.params.subscribe( params => {
       this.paramId = params.id;
       this.tabActual = params.tab;
@@ -109,12 +112,14 @@ export class PacienteComponent implements OnInit {
           }
           if (this.paciente.actualizadoPor) {
               this.suscription.push(
-              this.usuarioService.getUsuarioId(this.paciente.actualizadoPor)
-                .subscribe( (usuario: Usuario) => {
-                  this.cargando = true;
-                  this.actualizadoPor = usuario;
-                  this.cargando = false;
-                }));
+                this.usuarioService.getUsuarioId(this.paciente.actualizadoPor)
+                  .subscribe( (usuario: Usuario) => {
+                    console.log('actualizado por', this.paciente.actualizadoPor);
+                    this.cargando = true;
+                    this.actualizadoPor = usuario;
+                    this.cargando = false;
+                    console.log('usuario', this.actualizadoPor);
+                  }));
           }
         }
         )

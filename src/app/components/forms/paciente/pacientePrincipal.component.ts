@@ -12,10 +12,11 @@ import * as moment from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS, ERRORES } from 'src/app/config/config';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { SubirArchivoService } from 'src/app/services/service.index';
 import sweetAlert from 'sweetalert';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-paciente-principal',
@@ -29,9 +30,9 @@ import sweetAlert from 'sweetalert';
 export class PacientePrincipalComponent implements OnInit {
 
   @Input() paciente: PacienteProfile;
-  @Input() modo: string;
+  // @Input() modo: string;
   // @Output() imprimir: EventEmitter<PacienteProfile>;
-  ver: boolean;
+  ver: boolean = false;
   forma: FormGroup;
   listaEstadosPacientes = ['ESPERA', 'EVALUACION', 'DEVOLUCION', 'TRATAMIENTO', 'ALTA', 'ABANDONO', 'DERIVADO'];
   listaSexos: string[];
@@ -40,8 +41,11 @@ export class PacientePrincipalComponent implements OnInit {
   imagenSubir: File;
   imagenTemp: any;
   error = ERRORES;
+  suscription: Subscription[] = [];
+  // modo: string;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public tipoDocService: TipoDocService,
     public sexoService: SexoService,
     public fechaEdadService: FechaEdadService,
@@ -55,57 +59,39 @@ export class PacientePrincipalComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.modo === 'ver') {
-      this.ver = true;
-    }
+    console.log(this.paciente);
     this.crearFormulario();
     this.listaTipoDoc = this.tipoDocService.tipo_doc;
     this.listaSexos = this.sexoService.sexo;
     this.edad = this.fechaEdadService.calcularEdad(this.paciente.fecha_nac);
+    this.suscription.push(
+      this.activatedRoute.queryParams.subscribe( query => {
+        if (query.action === 'view') {
+          this.ver = true;
+          this.forma.disable();
+        } else {
+          this.ver = false;
+          this.forma.enable();
+        }
+      })
+    );
+
   }
 
   crearFormulario() {
-      this.forma = new FormGroup({
-        nombre: new FormControl(
-          { value: this.paciente.nombre,
-            disabled: this.ver
-          },
-          Validators.required
-          ),
-        apellido: new FormControl({
-          value: this.paciente.apellido,
-          disabled: this.ver
-        }, Validators.required),
-        tipo_doc: new FormControl({
-          value: this.paciente.tipo_doc,
-          disabled: this.ver
-        }),
-        nro_doc: new FormControl({
-          value: this.paciente.nro_doc,
-          disabled: this.ver
-         }, Validators.required),
-        sexo: new FormControl({
-          value: this.paciente.sexo,
-          disabled: this.ver}),
-        nacionalidad: new FormControl({
-          value: this.paciente.nacionalidad,
-          disabled: this.ver}),
-        fecha_nac: new FormControl({
-          value: this.paciente.fecha_nac,
-          disabled: this.ver}),
-        fecha_alta: new FormControl({
-          value: this.paciente.fechaAlta,
-          disabled: this.ver}),
-        fecha_baja: new FormControl({
-          value: this.paciente.fechaBaja,
-          disabled: this.ver}),
-        estado: new FormControl({
-          value: this.paciente.estado,
-          disabled: this.ver}),
-        observaciones: new FormControl({
-          value: this.paciente.observaciones || null,
-          disabled: this.ver})
-      });
+    this.forma = new FormGroup({
+      nombre: new FormControl( this.paciente.nombre, Validators.required),
+      apellido: new FormControl( this.paciente.apellido, Validators.required),
+      tipo_doc: new FormControl( this.paciente.tipo_doc ),
+      nro_doc: new FormControl( this.paciente.nro_doc, Validators.required),
+      sexo: new FormControl( this.paciente.sexo),
+      nacionalidad: new FormControl( this.paciente.nacionalidad ),
+      fecha_nac: new FormControl( this.paciente.fecha_nac ),
+      fecha_alta: new FormControl( this.paciente.fechaAlta ),
+      fecha_baja: new FormControl( this.paciente.fechaBaja ),
+      estado: new FormControl( this.paciente.estado ),
+      observaciones: new FormControl( this.paciente.observaciones || null )
+    });
   }
 
   guardar() {
@@ -120,7 +106,7 @@ export class PacientePrincipalComponent implements OnInit {
       paciente.contactos = this.paciente.contactos || null;
       paciente.familiares = this.paciente.familiares || null;
       paciente.ssocial = this.paciente.ssocial || null;
-      
+
       if (this.paciente._id === undefined) {
         this.pacienteService.createPaciente(paciente);
       } else {

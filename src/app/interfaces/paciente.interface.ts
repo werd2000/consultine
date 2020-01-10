@@ -14,7 +14,7 @@ export interface PacienteInterface extends PersonaInterface {
 
     // La propiedad estado indica si el paciente está
     // activo, en espera, de alta o abandonó;
-    estado: string;
+    estado: EstadosPaciente;
     // TODO: Implementar un array de domicilios
     // permitiendo domicilio legal, real, fiscal
     domicilio?: DomicilioInterface;
@@ -25,4 +25,8 @@ export interface PacienteInterface extends PersonaInterface {
     // Datos del seguro social
     ssocial?: SsocialInterface;
     // familia?: Familia[];
+}
+
+export enum EstadosPaciente {
+    'ESPERA', 'EVALUACION', 'DEVOLUCION', 'TRATAMIENTO', 'ALTA', 'ABANDONO', 'DERIVADO'
 }

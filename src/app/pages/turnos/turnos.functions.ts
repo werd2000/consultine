@@ -56,59 +56,59 @@ export class TurnosFunctions {
             break;
         }
 
-        let inicio = moment(turno.horaInicio,'HH:mm');
-        let fin = moment(turno.horaFin,'HH:mm');
-        let duracion = moment.duration(fin.diff(inicio)).minutes();
-        if (duracion === 0) {
+      let inicio = moment(turno.horaInicio,'HH:mm');
+      let fin = moment(turno.horaFin,'HH:mm');
+      let duracion = moment.duration(fin.diff(inicio)).minutes();
+      if (duracion === 0) {
           duracion = moment.duration(fin.diff(inicio)).hours();
           if (duracion === 1) {
             duracion = 60;
           }
-        }        
-        array[index].duracion = duracion;
+        }
+      array[index].duracion = duracion;
 
-        const grilla = [];
-        let horaInicial = '08:00';
-        let varTop = 145;
-        for ( var i = 0; i <= 48; i++) {
+      const grilla = [];
+      let horaInicial = '08:00';
+      let varTop = 145;
+      for ( var i = 0; i <= 48; i++) {
           grilla.push(
             { hora: moment(horaInicial,'HH:mm').add(i * 5, 'm').format('HH:mm'),
               top: varTop + (i * 10)
             }
           );
         }
-        horaInicial = '15:30';
-        varTop = 645;
-        for ( var i = 0; i <= 48; i++) {
+      horaInicial = '15:30';
+      varTop = 645;
+      for ( var i = 0; i <= 48; i++) {
           grilla.push(
             { hora: moment(horaInicial,'HH:mm').add(i * 5, 'm').format('HH:mm'),
               top: varTop + (i * 10)
             }
           );
         }
-        console.log(grilla[81]);
-        
-        
-        const resultado = grilla.find( horario => horario.hora === turno.horaInicio );
-        if (turno.horaInicio == '18:10') {
+      console.log(grilla[81]);
+
+
+      const resultado = grilla.find( horario => horario.hora === turno.horaInicio );
+      if (turno.horaInicio == '18:10') {
           console.log(resultado, turno.horaInicio);
         }
-                
-        let top = resultado.top;
-        
-        if (index != 0) {
+
+      let top = resultado.top;
+
+      if (index != 0) {
           // top = top - (duracion * 2 * index);
           // array[index].top = top - duracion  + 'px';
           array[index].top = top + 'px';
           if (turno.horaInicio == '18:10') {
             console.log(index);
-            console.log(duracion);            
+            console.log(duracion);
             console.log('top - (duracion * 2 * index)', top);
           }
         }
-        
-        array[index].top = top  + 'px';
-        
+
+      array[index].top = top  + 'px';
+
     }
 
 }
