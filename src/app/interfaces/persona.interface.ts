@@ -1,3 +1,5 @@
+import { Countries } from '../globals/countries.enum';
+
 // ====================================================
 // Interface Persona permite la implementación rápida
 // en otras interfaces o clases
@@ -6,11 +8,11 @@
 export interface PersonaInterface {
     apellido: string;
     nombre: string;
-    tipo_doc: string;
-    nro_doc: string;
-    nacionalidad: string;
+    tipoDoc: string;
+    nroDoc: string;
+    nacionalidad: Countries;
     sexo: string;
-    fecha_nac: string;
+    fechaNac: string;
     borrado: boolean;
     fechaAlta: string;
     actualizadoEl?: string;

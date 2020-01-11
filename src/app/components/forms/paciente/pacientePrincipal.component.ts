@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { PacienteProfile } from 'src/app/models/paciente.model';
+// import { PacienteProfile } from 'src/app/models/paciente.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   TipoDocService,
@@ -17,6 +17,8 @@ import { Location } from '@angular/common';
 import { SubirArchivoService } from 'src/app/services/service.index';
 import sweetAlert from 'sweetalert';
 import { Subscription } from 'rxjs';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
+import { EstadosPaciente } from 'src/app/globals/estadosPaciente.enum';
 
 @Component({
   selector: 'app-paciente-principal',
@@ -29,12 +31,14 @@ import { Subscription } from 'rxjs';
 })
 export class PacientePrincipalComponent implements OnInit {
 
-  @Input() paciente: PacienteProfile;
+  // @Input() paciente: PacienteProfile;
+  @Input() paciente: PacienteInterface;
   // @Input() modo: string;
   // @Output() imprimir: EventEmitter<PacienteProfile>;
   ver: boolean = false;
   forma: FormGroup;
-  listaEstadosPacientes = ['ESPERA', 'EVALUACION', 'DEVOLUCION', 'TRATAMIENTO', 'ALTA', 'ABANDONO', 'DERIVADO'];
+  listaEstadosPacientes = Object.keys(EstadosPaciente).map(
+    key => (EstadosPaciente[key]));
   listaSexos: string[];
   listaTipoDoc: string[];
   edad: string;
@@ -59,11 +63,11 @@ export class PacientePrincipalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.paciente);
+    console.log(this.listaEstadosPacientes);
     this.crearFormulario();
     this.listaTipoDoc = this.tipoDocService.tipo_doc;
     this.listaSexos = this.sexoService.sexo;
-    this.edad = this.fechaEdadService.calcularEdad(this.paciente.fecha_nac);
+    this.edad = this.fechaEdadService.calcularEdad(this.paciente.fechaNac);
     this.suscription.push(
       this.activatedRoute.queryParams.subscribe( query => {
         if (query.action === 'view') {
@@ -82,11 +86,11 @@ export class PacientePrincipalComponent implements OnInit {
     this.forma = new FormGroup({
       nombre: new FormControl( this.paciente.nombre, Validators.required),
       apellido: new FormControl( this.paciente.apellido, Validators.required),
-      tipo_doc: new FormControl( this.paciente.tipo_doc ),
-      nro_doc: new FormControl( this.paciente.nro_doc, Validators.required),
+      tipo_doc: new FormControl( this.paciente.tipoDoc ),
+      nro_doc: new FormControl( this.paciente.nroDoc, Validators.required),
       sexo: new FormControl( this.paciente.sexo),
       nacionalidad: new FormControl( this.paciente.nacionalidad ),
-      fecha_nac: new FormControl( this.paciente.fecha_nac ),
+      fecha_nac: new FormControl( this.paciente.fechaNac ),
       fecha_alta: new FormControl( this.paciente.fechaAlta ),
       fecha_baja: new FormControl( this.paciente.fechaBaja ),
       estado: new FormControl( this.paciente.estado ),
@@ -97,6 +101,7 @@ export class PacientePrincipalComponent implements OnInit {
   guardar() {
     if (this.forma.valid) {
       const paciente = this.forma.value;
+      console.log(paciente);
       this.controlFechaNac(paciente);
       this.controlFechaAlta(paciente);
       this.controlFechaBaja(paciente);

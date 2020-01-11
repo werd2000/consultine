@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { EmpleadoProfile } from 'src/app/models/empleado.model';
+// import { EmpleadoProfile } from 'src/app/models/empleado.model';
 import { Turno } from 'src/app/models/turno.model';
 import { TurnoInterface } from 'src/app/interfaces/turno.interface';
+import { EmpleadoInterface } from 'src/app/interfaces/empleado.interface';
 declare const $;
 
 @Injectable({
@@ -16,8 +17,8 @@ export class PrintPersonalService {
 
   constructor() { }
 
-  crearFichaPersonal( empleado: EmpleadoProfile) {
-    this.ficha = this.crearContenedorTabla(empleado.getNombreCompleto());
+  crearFichaPersonal( empleado: EmpleadoInterface) {
+    this.ficha = this.crearContenedorTabla(`${empleado.apellido} ${empleado.nombre}`);
 
     this.ficha += this.imprimirPrincipal(empleado);
     this.ficha += this.imprimirDomicilio(empleado);
@@ -45,7 +46,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  imprimirPrincipal(empleado: EmpleadoProfile) {
+  imprimirPrincipal(empleado: EmpleadoInterface) {
     let html = '<tr>';
     if (empleado.img) {
       html += '<td rowspan="8" style="width: 25%">';
@@ -61,11 +62,11 @@ export class PrintPersonalService {
     html += '</tr>';
     html += '<tr>';
     html += '<td>Nro de Doc.</td>';
-    html += '<td colspan="2"><h5>' + empleado.nro_doc + '</h5></td>';
+    html += '<td colspan="2"><h5>' + empleado.nroDoc + '</h5></td>';
     html += '</tr>';
     html += '<tr>';
     html += '<td>Fecha Nacimiento</td>';
-    html += '<td colspan="2"><h5>' + empleado.fecha_nac + '</h5></td>';
+    html += '<td colspan="2"><h5>' + empleado.fechaNac + '</h5></td>';
     html += '</tr>';
     html += '<tr>';
     html += '<td>Sexo</td>';
@@ -87,7 +88,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  imprimirDomicilio(empleado: EmpleadoProfile) {
+  imprimirDomicilio(empleado: EmpleadoInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Domicilio</h4></td>';
     html += '</tr>';
@@ -122,7 +123,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  imprimirContactos(empleado: EmpleadoProfile) {
+  imprimirContactos(empleado: EmpleadoInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Contactos</h4></td>';
     html += '</tr>';
@@ -145,7 +146,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  imprimirDatosFamiliares(empleado: EmpleadoProfile) {
+  imprimirDatosFamiliares(empleado: EmpleadoInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Datos familiares</h4></td>';
     html += '</tr>';
@@ -168,7 +169,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  imprimirSSocial(empleado: EmpleadoProfile) {
+  imprimirSSocial(empleado: EmpleadoInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Obra Social</h4></td>';
     html += '</tr>';
@@ -192,7 +193,7 @@ export class PrintPersonalService {
     return html;
   }
 
-  crearListaPersonal(listado: EmpleadoProfile[]) {
+  crearListaPersonal(listado: EmpleadoInterface[]) {
     let html = '';
     for (const item of listado) {
       html += '<tr>';
@@ -203,16 +204,16 @@ export class PrintPersonalService {
       }
       html += '<td>' + item.apellido + '</td>';
       html += '<td>' + item.nombre + '</td>';
-      html += '<td>' + item.nro_doc + '</td>';
-      html += '<td>' + item.fecha_nac + '</td>';
+      html += '<td>' + item.nroDoc + '</td>';
+      html += '<td>' + item.fechaNac + '</td>';
       html += '</tr>';
     }
     return html;
   }
 
-  crearListaTurnosPersonal(personal: EmpleadoProfile, listado: TurnoInterface[]) {
-    
-    let html = this.crearContenedorTabla( 'TURNOS DE ' + personal.getNombreCompleto());
+  crearListaTurnosPersonal(personal: EmpleadoInterface, listado: TurnoInterface[]) {
+
+    let html = this.crearContenedorTabla( 'TURNOS DE ' + `${personal.apellido} ${personal.nombre}`);
     for (const item of listado) {
       html += '<tr>';
       html += '<td>' + item.fechaInicio + '</td>';

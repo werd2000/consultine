@@ -1,5 +1,5 @@
 // ====================================================
-// Interface Empleado se extiende PersonaInterface y 
+// Interface Empleado se extiende PersonaInterface y
 // permite la implementación rápida en otras interfaces
 // o clases
 // ====================================================
@@ -24,4 +24,6 @@ export interface EmpleadoInterface extends PersonaInterface {
     ssocial?: SsocialInterface;
     // Datos de la profesión
     profesion?: ProfesionInterface[];
+    idUsuario?: string;
+    fechaBaja?: string;
 }

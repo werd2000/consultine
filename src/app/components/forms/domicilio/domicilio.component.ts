@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Domicilio } from 'src/app/models/domicilio.model';
+// import { Domicilio } from 'src/app/models/domicilio.model';
 import { ERRORES } from 'src/app/config/config';
 import { Router } from '@angular/router';
 import { DomicilioService, PrintService } from 'src/app/services/service.index';
 import { Location } from '@angular/common';
 import { PersonaInterface } from 'src/app/interfaces/persona.interface';
+import { DomicilioInterface } from 'src/app/interfaces/domicilio.interface';
 
 @Component({
   selector: 'app-domicilio',
@@ -19,7 +20,7 @@ export class DomicilioComponent implements OnInit {
   @Input() modo: string;
   @Output() imprimir: EventEmitter<PersonaInterface>;
   formaDomicilio: FormGroup;
-  domicilio: Domicilio;
+  domicilio: DomicilioInterface;
   error = ERRORES;
   ver: boolean;
 
@@ -37,16 +38,7 @@ export class DomicilioComponent implements OnInit {
       this.ver = true;
     }
     if (this.persona.domicilio === undefined || this.persona.domicilio === null) {
-      this.domicilio = new Domicilio(
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        '',
-        0,
-        0);
+      this.domicilio = {};
     } else {
       this.domicilio = this.persona.domicilio;
     }

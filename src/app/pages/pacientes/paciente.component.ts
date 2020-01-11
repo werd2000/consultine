@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PacienteProfile } from 'src/app/models/paciente.model';
+// import { PacienteProfile } from 'src/app/models/paciente.model';
 import { Subscription } from 'rxjs';
 import { PacienteService, PrintService } from 'src/app/services/service.index';
 import sweetAlert from 'sweetalert';
@@ -10,6 +10,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { Domicilio } from 'src/app/models/domicilio.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConstanciaTratamientoComponent } from './constancia-tratamiento.component';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
+import { Countries } from 'src/app/globals/countries.enum';
 
 @Component({
   selector: 'app-paciente',
@@ -19,7 +21,7 @@ import { ConstanciaTratamientoComponent } from './constancia-tratamiento.compone
 export class PacienteComponent implements OnInit {
 
   paramId: any;
-  paciente: PacienteProfile;
+  paciente: PacienteInterface;
   cargando: boolean;
   suscription: Subscription[] = [];
   modo: string;
@@ -52,26 +54,27 @@ export class PacienteComponent implements OnInit {
         this.cargarPaciente(this.paramId);
       } else {
         this.nombrePaciente = 'Paciente nuevo';
-        this.paciente = new PacienteProfile(
-          '',
-          '',
-          'DNI',
-          '',
-          '',
-          '',
-          '',
-          'ESPERA',
-          moment().format('YYYY-MM-DD'),
-          '',
-          false,
-          new Domicilio('', '', '', '', '', '', '', 0, 0),
-          null,
-          null,
-          null,
-          '',
-          '',
-          moment().format('YYYY-MM-DD'),
-          '');
+        this.paciente = {
+          apellido: '',
+          nombre: '',
+          tipoDoc: 'DNI',
+          nroDoc: '',
+          nacionalidad: Countries.Argentina,
+          sexo: '',
+          fechaNac: '',
+          estado: null,
+          fechaAlta: moment().format('YYYY-MM-DD'),
+          fechaBaja: '',
+          borrado: false,
+          domicilio: {},
+          contactos: null,
+          ssocial: null,
+          familiares: null,
+          img: '',
+          observaciones: '',
+          actualizadoEl: moment().format('YYYY-MM-DD'),
+          actualizadoPor: ''
+        };
         this.actualizadoPor = this.usuarioService.usuario;
       }
     });
@@ -87,28 +90,28 @@ export class PacienteComponent implements OnInit {
             this.route.navigate(['pacientes']);
           } else {
             this.nombrePaciente = resp.apellido + ', ' + resp.nombre;
-            this.paciente = new PacienteProfile(
-              resp.apellido,
-              resp.nombre,
-              resp.tipo_doc,
-              resp.nro_doc,
-              resp.nacionalidad,
-              resp.sexo,
-              resp.fecha_nac,
-              resp.estado,
-              resp.fecha_alta,
-              resp.fecha_baja,
-              resp.borrado,
-              resp.domicilio,
-              resp.contactos,
-              resp.ssocial,
-              resp.familiares,
-              resp.img,
-              resp.observaciones,
-              resp.actualizadoEl,
-              resp.actualizadoPor,
-              resp._id
-              );
+            this.paciente = {
+              apellido: resp.apellido,
+              nombre: resp.nombre,
+              tipoDoc: resp.tipo_doc,
+              nroDoc: resp.nro_doc,
+              nacionalidad: resp.nacionalidad,
+              sexo: resp.sexo,
+              fechaNac: resp.fecha_nac,
+              estado: resp.estado,
+              fechaAlta: resp.fecha_alta,
+              fechaBaja: resp.fecha_baja,
+              borrado: resp.borrado,
+              domicilio: resp.domicilio,
+              contactos: resp.contactos,
+              ssocial: resp.ssocial,
+              familiares: resp.familiares,
+              img: resp.img,
+              observaciones: resp.observaciones,
+              actualizadoEl: resp.actualizadoEl,
+              actualizadoPor: resp.actualizadoPor,
+              _id: resp._id
+            };
           }
           if (this.paciente.actualizadoPor) {
               this.suscription.push(

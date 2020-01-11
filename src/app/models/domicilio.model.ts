@@ -1,4 +1,5 @@
 import { DomicilioInterface } from '../interfaces/domicilio.interface';
+import { Countries } from '../globals/countries.enum';
 
 export class Domicilio implements DomicilioInterface {
 
@@ -9,7 +10,7 @@ export class Domicilio implements DomicilioInterface {
         public ciudad = '',
         public cp = '',
         public provincia = '',
-        public pais = '',
+        // public pais = 'Argentina',
         public lat = 0,
         public lng = 0,
     ) { }

@@ -35,7 +35,7 @@ export class PacienteService {
   // =====================================================================
   // Marca como borrado un paciente por id
   // =====================================================================
-  deletePaciente(paciente: PacienteProfile) {
+  deletePaciente(paciente: PacienteInterface) {
     sweetAlert({
       title: 'Atención, está por borrar datos',
       text: 'Una vez borrados, no se podrán recuperar',
@@ -78,7 +78,7 @@ export class PacienteService {
           `Los datos del paciente ${ paciente.apellido } ${ paciente.nombre } no se guardaron`,
           'warning');
       });
-  }
+  }s
 
   // =====================================================================
   // Crea un paciente

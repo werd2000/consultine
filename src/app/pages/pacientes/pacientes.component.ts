@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { PacienteService, PrintService, ExportPdfService, CopyService, CsvService } from 'src/app/services/service.index';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
 
 @Component({
   selector: 'app-pacientes',
@@ -50,18 +51,18 @@ export class PacientesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  crearNuevoPaciente() {
+  crearNuevoPaciente(): void {
     this.router.navigate(['/paciente/nuevo']);
   }
 
-  imprimir() {
+  imprimir(): void {
     this.printService.titulo = 'Lista de Pacientes';
     const encabezado = ['Imagen', 'Apellido', 'Nombre', 'Nro. Doc.', 'Fecha nac.'];
     this.printService.crearListaPacientes( encabezado, this.listaPacientes );
     this.printService.imprimir();
   }
 
-  exportarPdf() {
+  exportarPdf(): void {
     this.exportPdfService.setEncabezado();
     this.exportPdfService.setTitle('Lista de pacientes');
     this.exportPdfService.crearLista(this.listaPacientes);
@@ -69,7 +70,7 @@ export class PacientesComponent implements OnInit {
     return;
   }
 
-  copiarLista() {
+  copiarLista(): void {
     this.copyService.title = 'Lista de Pacientes';
     this.copyService.encabezado = ['Imagen', 'Apellido', 'Nombre', 'Nro. Doc.', 'Fecha nac.'];
     this.copyService.data = this.listaPacientes;
@@ -77,7 +78,7 @@ export class PacientesComponent implements OnInit {
     this.copyService.copiar();
   }
 
-  csvLista() {
+  csvLista(): void {
     this.csvService.title = 'Lista de Pacientes';
     this.csvService.encabezado = ['Imagen', 'Apellido', 'Fecha nac.', 'Nacionalidad', 'Nombre', 'Nro. Doc.',  'Sexo', 'Doc.'];
     this.csvService.data = this.listaPacientes;
@@ -85,19 +86,19 @@ export class PacientesComponent implements OnInit {
     this.csvService.exportar();
   }
 
-  editar(paciente) {
+  editar(paciente: PacienteInterface): void {
     this.router.navigate(['/paciente/editar/' + paciente._id]);
   }
 
-  ver(paciente) {
+  ver(paciente: PacienteInterface): void {
     this.router.navigate(['/paciente/ver/' + paciente._id]);
   }
 
-  eliminar(paciente) {
+  eliminar(paciente: PacienteInterface): void {
     this.pacienteService.deletePaciente(paciente);
   }
 
-  verTurnos(paciente) {
+  verTurnos(paciente: PacienteInterface): void {
     this.router.navigate(['/turnos/paciente/' + paciente._id]);
   }
 

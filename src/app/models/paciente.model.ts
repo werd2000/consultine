@@ -7,18 +7,20 @@ import { Contacto } from './contacto.model';
 import { Ssocial } from './ssocial.model';
 import { Familia } from './familia.model';
 import { PacienteInterface } from '../interfaces/paciente.interface';
+import { EstadosPaciente } from '../globals/estadosPaciente.enum';
+import { Countries } from '../globals/countries.enum';
 
 export class PacienteProfile implements PacienteInterface {
 
     constructor(
         public apellido: string,
         public nombre: string,
-        public tipo_doc: string,
-        public nro_doc: string,
-        public nacionalidad: string,
+        public tipoDoc: string,
+        public nroDoc: string,
+        public nacionalidad: Countries,
         public sexo: string,
-        public fecha_nac: string,
-        public estado: string,
+        public fechaNac: string,
+        public estado: EstadosPaciente,
         public fechaAlta: string,
         public fechaBaja: string,
         public borrado: boolean,

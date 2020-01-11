@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EmpleadoProfile } from 'src/app/models/empleado.model';
+// import { EmpleadoProfile } from 'src/app/models/empleado.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PersonalService } from '../../services/personal/personal.service';
 import { UsuarioService, PrintService } from 'src/app/services/service.index';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { Usuario } from 'src/app/models/usuario.model';
+import { EmpleadoInterface } from 'src/app/interfaces/empleado.interface';
+import { Countries } from 'src/app/globals/countries.enum';
 
 @Component({
   selector: 'app-empleado',
@@ -14,7 +16,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 export class EmpleadoComponent implements OnInit, OnDestroy {
 
   public cargando: boolean;
-  public empleado: EmpleadoProfile;
+  public empleado: EmpleadoInterface;
   public tabActual: number;
   public modo: string;
   public paramId: any;
@@ -31,7 +33,7 @@ export class EmpleadoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.url.subscribe( p => {
-      this.modo = p[1].path;      
+      this.modo = p[1].path;
     });
     this.activatedRoute.params.subscribe( params => {
       this.cargando = true;
@@ -40,30 +42,24 @@ export class EmpleadoComponent implements OnInit, OnDestroy {
       if (this.paramId !== 'nuevo') {
         this.cargarEmpleado(this.paramId);
       } else {
-        this.empleado = new EmpleadoProfile(
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          moment().format('YYYY-MM-DD'),
-          '',
-          false,
-          // new Domicilio('', '', '', '', '', '', '', 0, 0),
-          null,
-          null,
-          null,
-          null,
-          null,
-          '',
-          '',
-          moment().format('YYYY-MM-DD'),
-          '');
-        this.actualizadoPor = this.usuarioService.usuario;
-        }
-      this.cargando = false;
+        this.empleado = {
+          apellido: '',
+          nombre: '',
+          tipoDoc: '',
+          nroDoc: '',
+          sexo: '',
+          fechaNac: '',
+          nacionalidad: Countries.Argentina,
+          borrado: false,
+          fechaAlta: moment().format('YYYY-MM-DD'),
+          actualizadoEl: moment().format('YYYY-MM-DD'),
+          actualizadoPor: '',
+          observaciones: '',
+          img: '',
+          _id: '',
+        };
+        this.cargando = false;
+      }
     });
   }
 
@@ -82,28 +78,28 @@ export class EmpleadoComponent implements OnInit, OnDestroy {
             sweetAlert('Error', 'No se encuentra un empleado con esa identificación', 'warning');
             this.route.navigate(['personal']);
           } else {
-            this.empleado = new EmpleadoProfile(
-              resp.apellido,
-              resp.nombre,
-              resp.tipo_doc,
-              resp.nro_doc,
-              resp.nacionalidad,
-              resp.sexo,
-              resp.fecha_nac,
-              resp.fecha_alta,
-              resp.fecha_baja,
-              resp.borrado,
-              resp.domicilio,
-              resp.contactos,
-              resp.profesion,
-              resp.ssocial,
-              resp.familiares,
-              resp.img,
-              resp.observaciones,
-              resp.actualizadoEl,
-              resp.actualizadoPor,
-              resp._id
-              );
+            this.empleado = {
+              apellido: resp.apellido,
+              nombre: resp.nombre,
+              tipoDoc: resp.tipo_doc,
+              nroDoc: resp.nro_doc,
+              nacionalidad: resp.nacionalidad,
+              sexo: resp.sexo,
+              fechaNac: resp.fecha_nac,
+              fechaAlta: resp.fecha_alta,
+              fechaBaja: resp.fecha_baja,
+              borrado: resp.borrado,
+              domicilio: resp.domicilio,
+              contactos: resp.contactos,
+              profesion: resp.profesion,
+              ssocial: resp.ssocial,
+              familiares: resp.familiares,
+              img: resp.img,
+              observaciones: resp.observaciones,
+              actualizadoEl: resp.actualizadoEl,
+              actualizadoPor: resp.actualizadoPor,
+              _id: resp._id
+            };
           }
         if (this.empleado.actualizadoPor) {
               this.suscription.push(
@@ -136,10 +132,9 @@ export class EmpleadoComponent implements OnInit, OnDestroy {
   verEmpleado() {
     this.route.navigate(['/empleado/ver/' + this.empleado._id]);
   }
-  
 
   verTurnos() {
-    this.route.navigate(['/turnos/personal/' + this.empleado._id])    
+    this.route.navigate(['/turnos/personal/' + this.empleado._id]);
   }
 
 }

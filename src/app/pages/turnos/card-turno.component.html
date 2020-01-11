@@ -1,7 +1,7 @@
 <mat-card class="mat-card-turnos" [ngStyle]="{'height': turno.duracion * 2 + 'px', 'max-height': turno.duracion * 2 + 'px', 'top': turno.top}" style="position: absolute; width: inherit">
               
   <mat-card-header *ngIf="turno" class="turnos-header pointer">
-    <mat-card-title (click)="editarTurno(turno)">
+    <mat-card-title (click)="editarTurno(turno)" class="mat-card-title-turno">
       <div class="row">
         <div class="col-12 text-center">
           {{ turno.horaInicio }}

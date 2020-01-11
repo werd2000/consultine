@@ -2,13 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PersonalService, UsuarioService, TurnosService, PacienteService, PrintService, ExportPdfService, CsvService } from 'src/app/services/service.index';
-import { EmpleadoProfile } from 'src/app/models/empleado.model';
+import {
+  PersonalService,
+  UsuarioService,
+  TurnosService,
+  PacienteService, PrintService, ExportPdfService, CsvService } from 'src/app/services/service.index';
+// import { EmpleadoProfile } from 'src/app/models/empleado.model';
 import { mergeMap } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario.model';
 import * as moment from 'moment';
 import { PacienteProfile } from 'src/app/models/paciente.model';
 import { TurnoInterface } from 'src/app/interfaces/turno.interface';
+import { EmpleadoInterface } from 'src/app/interfaces/empleado.interface';
 
 @Component({
   selector: 'app-personal-turnos',
@@ -27,7 +32,7 @@ export class PersonalTurnosComponent implements OnInit {
   cargando: boolean = false;
   suscription: Subscription[] = [];
   idPersonal: string;
-  personal: EmpleadoProfile;
+  personal: EmpleadoInterface;
   actualizadoPor: Usuario;
   turnosProfesional: any;
 
@@ -76,28 +81,28 @@ export class PersonalTurnosComponent implements OnInit {
           sweetAlert('Error', 'No se encuentra personal con esa identificación', 'warning');
           this.route.navigate(['personal']);
         } else {
-          this.personal = new EmpleadoProfile(
-            emp.apellido,
-            emp.nombre,
-            emp.tipo_doc,
-            emp.nro_doc,
-            emp.nacionalidad,
-            emp.sexo,
-            emp.fecha_nac,
-            emp.fecha_alta,
-            emp.fecha_baja,
-            emp.borrado,
-            emp.domicilio,
-            emp.contactos,
-            emp.profesion,
-            emp.ssocial,
-            emp.familiares,
-            emp.img,
-            emp.observaciones,
-            emp.actualizadoEl,
-            emp.actualizadoPor,
-            emp._id
-            );
+          this.personal = {
+            apellido: emp.apellido,
+            nombre: emp.nombre,
+            tipoDoc: emp.tipo_doc,
+            nroDoc: emp.nro_doc,
+            nacionalidad: emp.nacionalidad,
+            sexo: emp.sexo,
+            fechaNac: emp.fecha_nac,
+            fechaAlta: emp.fecha_alta,
+            fechaBaja: emp.fecha_baja,
+            borrado: emp.borrado,
+            domicilio: emp.domicilio,
+            contactos: emp.contactos,
+            profesion: emp.profesion,
+            ssocial: emp.ssocial,
+            familiares: emp.familiares,
+            img: emp.img,
+            observaciones: emp.observaciones,
+            actualizadoEl: emp.actualizadoEl,
+            actualizadoPor: emp.actualizadoPor,
+            _id: emp._id
+          };
           // await this.getCreador(emp.actualizadoPor);
         }
         return this.turnosService.searchTurnos('idProfesional', id);
@@ -139,7 +144,7 @@ export class PersonalTurnosComponent implements OnInit {
   }
 
   csvLista() {
-    this.csvService.title = 'Turnos de ' + this.personal.getNombreCompleto();
+    this.csvService.title = 'Turnos de ' + `${this.personal.apellido} ${this.personal.nombre}`;
     this.csvService.encabezado = ['Fecha', 'Paciente', 'Duración', 'Estado']
     this.csvService.data = this.turnosProfesional.map(this.turnoCsv);
     this.csvService.exportarDatos();

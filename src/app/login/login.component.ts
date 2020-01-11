@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public router: Router,
-    public _usuarioService: UsuarioService
+    public usuarioService: UsuarioService
   ) {
     this.recuerdame = false;
   }
@@ -46,8 +46,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  login ( proveedor: string ) {
-    this._usuarioService.loginGoogle(proveedor);
+  login( proveedor: string ) {
+    this.usuarioService.loginGoogle(proveedor);
   }
 
   attachSignin( elemento ) {

@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS, ERRORES } from 'src/app/config/config';
-import { EmpleadoProfile } from 'src/app/models/empleado.model';
+// import { EmpleadoProfile } from 'src/app/models/empleado.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {
   TipoDocService,
@@ -16,6 +16,7 @@ import {
 } from 'src/app/services/service.index';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { EmpleadoInterface } from 'src/app/interfaces/empleado.interface';
 
 
 @Component({
@@ -29,7 +30,8 @@ import * as moment from 'moment';
 })
 export class EmpleadoPrincipalComponent implements OnInit {
 
-  @Input() empleado: EmpleadoProfile;
+  // @Input() empleado: EmpleadoProfile;
+  @Input() empleado: EmpleadoInterface;
   @Input() modo: string;
   ver: boolean;
   forma: FormGroup;
@@ -59,7 +61,7 @@ export class EmpleadoPrincipalComponent implements OnInit {
     this.crearFormulario();
     this.listaTipoDoc = this.tipoDocService.tipo_doc;
     this.listaSexos = this.sexoService.sexo;
-    this.edad = this.fechaEdadService.calcularEdad(this.empleado.fecha_nac);
+    this.edad = this.fechaEdadService.calcularEdad(this.empleado.fechaNac);
   }
 
   crearFormulario() {
@@ -75,11 +77,11 @@ export class EmpleadoPrincipalComponent implements OnInit {
         disabled: this.ver
       }, Validators.required),
       tipo_doc: new FormControl({
-        value: this.empleado.tipo_doc,
+        value: this.empleado.tipoDoc,
         disabled: this.ver
       }),
       nro_doc: new FormControl({
-        value: this.empleado.nro_doc,
+        value: this.empleado.nroDoc,
         disabled: this.ver
        }, Validators.required),
       sexo: new FormControl({
@@ -89,7 +91,7 @@ export class EmpleadoPrincipalComponent implements OnInit {
         value: this.empleado.nacionalidad,
         disabled: this.ver}),
       fecha_nac: new FormControl({
-        value: this.empleado.fecha_nac,
+        value: this.empleado.fechaNac,
         disabled: this.ver}),
       fecha_alta: new FormControl({
         value: this.empleado.fechaAlta,

@@ -18,6 +18,9 @@ export class RoleUsuarioPipe implements PipeTransform {
       case 'ROLE_USER':
         return 'Usuario';
 
+      case 'ROLE_PROF':
+          return 'Profesional';
+
       default:
         return 'Usuario';
     }

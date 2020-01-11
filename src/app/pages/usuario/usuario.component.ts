@@ -23,7 +23,7 @@ export class UsuarioComponent implements OnInit {
   forma: FormGroup;
   ver: boolean;
   error = ERRORES;
-  listaRoles: string[] = ['ROLE_ADMIN', 'ROLE_USER'];
+  listaRoles: string[] = ['ROLE_ADMIN', 'ROLE_PROF', 'ROLE_USER'];
   imagenTemp: any;
   imagenSubir: File;
 
@@ -119,7 +119,13 @@ export class UsuarioComponent implements OnInit {
         console.log(usuario);
         this.usuarioService.createUsuario(usuario);
       } else {
+        if (this.usuario.google) {
+          usuario.email = this.usuario.email;
+          usuario.google = this.usuario.google;
+          usuario.password = ':)';
+        }
         usuario._id = this.usuario._id;
+        console.log(usuario);
         this.usuarioService.updateUsuario(usuario);
       }
     }

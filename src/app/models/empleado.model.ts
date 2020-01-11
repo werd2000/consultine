@@ -4,17 +4,18 @@ import { Ssocial } from './ssocial.model';
 import { Profesion } from './profesion.model';
 import { EmpleadoInterface } from '../interfaces/empleado.interface';
 import { Familia } from './familia.model';
+import { Countries } from '../globals/countries.enum';
 
 export class EmpleadoProfile implements EmpleadoInterface {
 
     constructor(
         public apellido: string,
         public nombre: string,
-        public tipo_doc: string,
-        public nro_doc: string,
-        public nacionalidad: string,
+        public tipoDoc: string,
+        public nroDoc: string,
+        public nacionalidad: Countries,
         public sexo: string,
-        public fecha_nac: string,
+        public fechaNac: string,
         public fechaAlta: string,
         public fechaBaja: string,
         public borrado: boolean,

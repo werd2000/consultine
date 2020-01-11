@@ -5,7 +5,7 @@
   <mat-card-header *ngIf="!cargandoPaciente" class="color-bck-turnos p-1 bradius">
       <img mat-card-avatar [src]="paciente?.img | imagen">
       <mat-card-title *ngIf="paciente">
-          Turnos de <br> {{ paciente.getNombreCompleto() }}
+          Turnos de <br> {{ paciente.apellido }}
         </mat-card-title>
       <!-- <mat-card-subtitle *ngIf="!cargando">Actualizado el {{ paciente.actualizadoEl | date:'dd-MM-yyyy'}} por {{ actualizadoPor.nombre }} </mat-card-subtitle> -->
       <span class="toolbar-spacer"></span>

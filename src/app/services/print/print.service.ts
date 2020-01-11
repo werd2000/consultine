@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PacienteProfile } from 'src/app/models/paciente.model';
-import { EmpleadoProfile } from '../../models/empleado.model';
+// import { EmpleadoProfile } from '../../models/empleado.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { PrintUsuarioService } from './print.usuario.service';
 import { PrintPersonalService } from './print.personal.service';
@@ -8,6 +8,8 @@ import { PrintPacienteService } from './print.paciente.service';
 import { PrintAreaService } from './print.area.service';
 import { Area } from 'src/app/models/area.model';
 import { TurnoInterface } from 'src/app/interfaces/turno.interface';
+import { EmpleadoInterface } from 'src/app/interfaces/empleado.interface';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
 declare const $;
 
 @Injectable({
@@ -46,17 +48,17 @@ export class PrintService {
   }
 
   // PACIENTES
-  crearListaPacientes(encabezado: string[], listado: PacienteProfile[]) {
+  crearListaPacientes(encabezado: string[], listado: PacienteInterface[]) {
     this.crearEncabezadoLista(encabezado);
     this.lista += this.printPacienteService.crearListaPacientes(listado);
     this.crearFinLista(listado, 'pacientes');
   }
 
-  crearFichaPaciente( paciente: PacienteProfile ) {
+  crearFichaPaciente( paciente: PacienteInterface ) {
     this.lista = this.printPacienteService.crearFichaPaciente(paciente);
   }
 
-  listaTurnosPaciente( paciente: PacienteProfile, turnos: TurnoInterface[] ) {
+  listaTurnosPaciente( paciente: PacienteInterface, turnos: TurnoInterface[] ) {
     this.lista = this.printPacienteService.crearListaTurnosPaciente(paciente, turnos);
   }
 
@@ -66,17 +68,17 @@ export class PrintService {
   }
 
   // PERSONAL
-  crearListaPersonal(encabezado: string[], listado: EmpleadoProfile[]) {
+  crearListaPersonal(encabezado: string[], listado: EmpleadoInterface[]) {
     this.crearEncabezadoLista(encabezado);
     this.lista += this.printPersonalService.crearListaPersonal(listado);
     this.crearFinLista(listado, 'personal');
   }
 
-  crearFichaPersonal( empleado: EmpleadoProfile ) {
+  crearFichaPersonal( empleado: EmpleadoInterface ) {
     this.lista = this.printPersonalService.crearFichaPersonal(empleado);
   }
 
-  listaTurnosPersonal( personal: EmpleadoProfile, turnos: TurnoInterface[] ) {
+  listaTurnosPersonal( personal: EmpleadoInterface, turnos: TurnoInterface[] ) {
     this.lista = this.printPersonalService.crearListaTurnosPersonal(personal, turnos);
   }
 

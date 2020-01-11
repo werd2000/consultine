@@ -1,9 +1,9 @@
 <mat-card class="pacientes">
 
     <mat-card-header *ngIf="paciente"  class="color-bck-pacientes p-1 bradius">
-        <img mat-card-avatar [src]="paciente.img | imagen">
+        <img mat-card-avatar [src]="paciente.img | imagen" class="color-bck-avatar">
         <mat-card-title>{{ nombrePaciente }}</mat-card-title>
-        <!-- <mat-card-subtitle class="mt-1" *ngIf="!cargando">Actualizado el {{ paciente.actualizadoEl | date:'dd-MM-yyyy'}} por {{ actualizadoPor.nombre }} </mat-card-subtitle> -->
+        <mat-card-subtitle class="mt-1" *ngIf="!cargando">Actualizado el {{ paciente.actualizadoEl | date:'dd-MM-yyyy'}} por {{ actualizadoPor.nombre }} </mat-card-subtitle>
         <span class="toolbar-spacer"></span>
 
         <!-- HERRAMIENTAS -->

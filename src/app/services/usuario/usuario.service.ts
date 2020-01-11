@@ -149,7 +149,15 @@ export class UsuarioService {
   // Login con Google
   // =====================================================================
   loginGoogle( token: string) {
-    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider())
+    .then( (resp) => {
+      console.log(resp);
+      this.router.navigate(['/']);
+    })
+    .catch( (error) => {
+      console.error(error);
+      alert('ocurrió un error en la autenticación del usuario');
+    });
   }
 
   // =====================================================================
@@ -181,6 +189,7 @@ export class UsuarioService {
     }
     this.afAuth.auth.signOut().then( () => {
       // console.log('User signed out.');
+      this.router.navigate(['/login']);
     });
   }
 

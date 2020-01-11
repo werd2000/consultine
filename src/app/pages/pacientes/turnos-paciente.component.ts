@@ -8,7 +8,7 @@ import {
   PersonalService,
   PrintService,
   ExportPdfService } from 'src/app/services/service.index';
-import { PacienteProfile } from 'src/app/models/paciente.model';
+// import { PacienteProfile } from 'src/app/models/paciente.model';
 import { Usuario } from 'src/app/models/usuario.model';
 import { Turno } from 'src/app/models/turno.model';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { TurnosFunctions } from 'src/app/pages/turnos/turnos.functions';
 import { mergeMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
 
 @Component({
   selector: 'app-turnos-paciente',
@@ -35,7 +36,7 @@ export class TurnosPacienteComponent implements OnInit, OnDestroy{
   cargando: boolean = false;
   cargandoPaciente: boolean = false;
   suscription: Subscription[] = [];
-  paciente: PacienteProfile;
+  paciente: PacienteInterface;
   actualizadoPor: Usuario;
   turnosPaciente: any;
   idPaciente: string;
@@ -97,28 +98,28 @@ export class TurnosPacienteComponent implements OnInit, OnDestroy{
           sweetAlert('Error', 'No se encuentra un paciente con esa identificación', 'warning');
           this.route.navigate(['pacientes']);
         } else {
-          this.paciente = new PacienteProfile(
-            pacs.apellido,
-            pacs.nombre,
-            pacs.tipo_doc,
-            pacs.nro_doc,
-            pacs.nacionalidad,
-            pacs.sexo,
-            pacs.fecha_nac,
-            pacs.estado,
-            pacs.fecha_alta,
-            pacs.fecha_baja,
-            pacs.borrado,
-            pacs.domicilio,
-            pacs.contactos,
-            pacs.ssocial,
-            pacs.familiares,
-            pacs.img,
-            pacs.observaciones,
-            pacs.actualizadoEl,
-            pacs.actualizadoPor,
-            pacs._id
-            );
+          this.paciente = {
+            apellido: pacs.apellido,
+            nombre: pacs.nombre,
+            tipoDoc: pacs.tipo_doc,
+            nroDoc: pacs.nro_doc,
+            nacionalidad: pacs.nacionalidad,
+            sexo: pacs.sexo,
+            fechaNac: pacs.fecha_nac,
+            estado: pacs.estado,
+            fechaAlta: pacs.fecha_alta,
+            fechaBaja: pacs.fecha_baja,
+            borrado: pacs.borrado,
+            domicilio: pacs.domicilio,
+            contactos: pacs.contactos,
+            ssocial: pacs.ssocial,
+            familiares: pacs.familiares,
+            img: pacs.img,
+            observaciones: pacs.observaciones,
+            actualizadoEl: pacs.actualizadoEl,
+            actualizadoPor: pacs.actualizadoPor,
+            _id: pacs._id
+          };
         }
 
       return this.turnosService.searchTurnos('idPaciente', id);

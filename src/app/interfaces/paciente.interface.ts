@@ -9,6 +9,7 @@ import { DomicilioInterface } from './domicilio.interface';
 import { ContactoInterface } from './contacto.interface';
 import { SsocialInterface } from './ssocial.interface';
 import { FamiliaInterface } from './familia.interface';
+import { EstadosPaciente } from '../globals/estadosPaciente.enum';
 
 export interface PacienteInterface extends PersonaInterface {
 
@@ -25,8 +26,6 @@ export interface PacienteInterface extends PersonaInterface {
     // Datos del seguro social
     ssocial?: SsocialInterface;
     // familia?: Familia[];
+    fechaBaja: string;
 }
 
-export enum EstadosPaciente {
-    'ESPERA', 'EVALUACION', 'DEVOLUCION', 'TRATAMIENTO', 'ALTA', 'ABANDONO', 'DERIVADO'
-}

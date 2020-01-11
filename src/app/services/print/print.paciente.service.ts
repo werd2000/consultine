@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { PacienteProfile } from 'src/app/models/paciente.model';
+// import { PacienteProfile } from 'src/app/models/paciente.model';
 import * as moment from 'moment';
+import { PacienteInterface } from 'src/app/interfaces/paciente.interface';
 declare const $;
 
 @Injectable({
@@ -16,8 +17,8 @@ export class PrintPacienteService {
 
   constructor() { }
 
-  crearFichaPaciente( paciente: PacienteProfile ) {
-    this.ficha = this.crearContenedorLista(paciente.getNombreCompleto());
+  crearFichaPaciente( paciente: PacienteInterface ) {
+    this.ficha = this.crearContenedorLista(`${paciente.apellido} ${paciente.nombre}`);
 
     this.ficha += this.imprimirPrincipal(paciente);
 
@@ -46,7 +47,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  imprimirPrincipal(paciente: PacienteProfile) {
+  imprimirPrincipal(paciente: PacienteInterface) {
     let html = '<tr>';
     if (paciente.img) {
       html += '<td rowspan="8" style="width: 25%">';
@@ -63,11 +64,11 @@ export class PrintPacienteService {
     html += '</tr>';
     html += '<tr>';
     html += '<td>Nro de Doc.</td>';
-    html += '<td colspan="2"><h5>' + paciente.nro_doc + '</h5></td>';
+    html += '<td colspan="2"><h5>' + paciente.nroDoc + '</h5></td>';
     html += '</tr>';
     html += '<tr>';
     html += '<td>Fecha Nacimiento</td>';
-    html += '<td colspan="2"><h5>' + paciente.fecha_nac + '</h5></td>';
+    html += '<td colspan="2"><h5>' + paciente.fechaNac + '</h5></td>';
     html += '</tr>';
     html += '<tr>';
     html += '<td>Sexo</td>';
@@ -101,7 +102,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  imprimirDomicilio(paciente: PacienteProfile) {
+  imprimirDomicilio(paciente: PacienteInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Domicilio</h4></td>';
     html += '</tr>';
@@ -134,7 +135,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  imprimirContactos(paciente: PacienteProfile) {
+  imprimirContactos(paciente: PacienteInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Contactos</h4></td>';
     html += '</tr>';
@@ -153,7 +154,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  imprimirDatosFamiliares(paciente: PacienteProfile) {
+  imprimirDatosFamiliares(paciente: PacienteInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white">Datos familiares</h4></td>';
     html += '</tr>';
@@ -176,7 +177,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  imprimirSSocial(paciente: PacienteProfile) {
+  imprimirSSocial(paciente: PacienteInterface) {
     let html = '<tr>';
     html += '<td colspan="4"><h4 class="text-center bg-secondary text-white"  >Obra Social</h4></td>';
     html += '</tr>';
@@ -192,7 +193,7 @@ export class PrintPacienteService {
     return html;
   }
 
-  crearListaPacientes(listado: PacienteProfile[]) {
+  crearListaPacientes(listado: PacienteInterface[]) {
     let html = '';
     for (const item of listado) {
       html += '<tr>';
@@ -203,8 +204,8 @@ export class PrintPacienteService {
       }
       html += '<td>' + item.apellido + '</td>';
       html += '<td>' + item.nombre + '</td>';
-      html += '<td>' + item.nro_doc + '</td>';
-      html += '<td>' + item.fecha_nac + '</td>';
+      html += '<td>' + item.nroDoc + '</td>';
+      html += '<td>' + item.fechaNac + '</td>';
       html += '</tr>';
     }
     return html;
