@@ -30,6 +30,7 @@ export class TurnosComponent implements OnInit, OnDestroy {
   suscriptor: Subscription[] = [];
   fecha: moment.Moment;
   turnosFunction: any;
+  cantProfesionales: number;
 
   constructor(
     public personalService: PersonalService,
@@ -51,41 +52,46 @@ export class TurnosComponent implements OnInit, OnDestroy {
   }
 
   cargarTurnos() {
+    this.cantProfesionales = 0;
     this.suscriptor.push(this.personalService.getPersonal()
       .subscribe( (personal: EmpleadoProfile[]) => {
         this.columns = [];
         this.cargando = true;
         personal.forEach(profesional => {
-          this.suscriptor.push(
-            this.turnosService.getTurnosFechaProfesional(this.fecha.format('YYYY-MM-DD'), profesional._id)
-              .subscribe(async (t: any) => {
-                this.turnos = t;
-                this.turnos.sort((a, b) => {
-                    const x = a.horaInicio.toLowerCase();
-                    const y = b.horaInicio.toLowerCase();
-                    if (x < y) {return -1; }
-                    if (x > y) {return 1; }
-                    return 0;
-                });
-
-                await this.turnos.forEach(
-                  this.turnosFunction.paraMostrar.bind(this)
-                );
-
-                this.columns.push({
-                    head: profesional,
-                    campo: profesional.nombre,
-                    id: profesional._id,
-                    turnos: this.turnos
+          // console.log(profesional);
+          if (profesional.profesion[0].area !== 'ADMINISTRACION') {
+            this.cantProfesionales++;
+            this.suscriptor.push(
+              this.turnosService.getTurnosFechaProfesional(this.fecha.format('YYYY-MM-DD'), profesional._id)
+                .subscribe(async (t: any) => {
+                  this.turnos = t;
+                  this.turnos.sort((a, b) => {
+                      const x = a.horaInicio.toLowerCase();
+                      const y = b.horaInicio.toLowerCase();
+                      if (x < y) {return -1; }
+                      if (x > y) {return 1; }
+                      return 0;
                   });
-              })
-            );
+  
+                  await this.turnos.forEach(
+                    this.turnosFunction.paraMostrar.bind(this)
+                  );
+  
+                  this.columns.push({
+                      head: profesional,
+                      campo: profesional.nombre,
+                      id: profesional._id,
+                      turnos: this.turnos
+                    });
+                })
+              );
+          }
         });
 
         let elem = document.getElementById('encabezado-turnos');
-        this.widthColumnE = (elem.offsetWidth / personal.length) + 'px';
+        this.widthColumnE = (elem.offsetWidth / this.cantProfesionales) + 'px';
         elem = document.getElementById('detalle-turnos');
-        this.widthColumnD = (elem.offsetWidth / personal.length) - 1 + 'px';
+        this.widthColumnD = (elem.offsetWidth / this.cantProfesionales) - 1 + 'px';
         this.cargando = false;
       })
     );

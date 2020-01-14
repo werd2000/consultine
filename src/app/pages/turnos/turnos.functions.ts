@@ -86,7 +86,7 @@ export class TurnosFunctions {
             }
           );
         }
-      console.log(grilla[81]);
+      // console.log(grilla[81]);
 
 
       const resultado = grilla.find( horario => horario.hora === turno.horaInicio );

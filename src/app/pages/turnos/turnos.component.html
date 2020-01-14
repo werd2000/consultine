@@ -1,99 +1,145 @@
 <mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
 
 <mat-card *ngIf="!cargando">
-
-    <mat-toolbar class="color-bck-turnos">
+  <mat-toolbar class="color-bck-turnos ">
+    <div class="toolbar-turnos">
+      <div class="toolbar-turnos-title">
         <mat-toolbar-row>
-
-          <!-- <span>Turnos del {{ fecha | date: "EEEE dd-MM-yyyy" }}</span> -->
-          <span>Turnos del {{ fecha | date: 'EEEE dd-MM-yyyy' }}</span>
-          <span class="toolbar-spacer"></span>
-          <button type="button" mat-raised-button (click)="hoy()" matTooltip="Ver turnos de hoy">
-              Hoy
-          </button>
-          <span class="toolbar-spacer"></span>
-          <button mat-mini-fab color="accent" (click)="diaAnterior()" matTooltip="Día anterior">
-            <mat-icon aria-hidden="false" aria-label="ayer icon">
-                keyboard_arrow_left
-            </mat-icon>
-          </button>
-
-          <mat-form-field style="width: 0px">
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateChange)="cambiarFecha($event)">
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <button mat-mini-fab color="accent" (click)="picker.open()" matTooltip="Seleccionar fecha">
-            <mat-icon aria-hidden="false" aria-label="ayer icon">
-                calendar_today
-            </mat-icon>
-          </button>
-          <button mat-mini-fab color="accent" (click)="diaSiguiente()" matTooltip="Día siguiente">
-            <mat-icon aria-hidden="false" aria-label="mañana icon">
-                keyboard_arrow_right
-            </mat-icon>
-          </button>
-          <mat-divider [vertical]="true" class="divider"></mat-divider>
-          <button mat-mini-fab color="warn" (click)="nuevo()" class="ml-5px" matTooltip="Crear Turno">
-            <mat-icon aria-hidden="false" aria-label="nuevo icon">
-                today
-            </mat-icon>
-          </button>
-          <mat-divider [vertical]="true" class="divider"></mat-divider>
-          <button mat-mini-fab color="default" (click)="imprimir()" class="ml-5px" matTooltip="Imprimir Turnos">
-            <mat-icon aria-hidden="false" aria-label="print icon">
-                print
-            </mat-icon>
-          </button>
+            <span>Turnos del {{ fecha | date: "EEEE dd-MM-yyyy" }}</span>
         </mat-toolbar-row>
-    </mat-toolbar>
+      </div>
+          
+          <div class="toolbar-turnos-tools">
+            <mat-toolbar-row>
+            <button
+              type="button"
+              mat-raised-button
+              (click)="hoy()"
+              matTooltip="Ver turnos de hoy"
+            >
+              Hoy
+            </button>
+            <button
+              mat-mini-fab
+              color="accent"
+              (click)="diaAnterior()"
+              matTooltip="Día anterior"
+            >
+              <mat-icon aria-hidden="false" aria-label="ayer icon">
+                keyboard_arrow_left
+              </mat-icon>
+            </button>
+            <mat-form-field style="width: 0px">
+              <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Choose a date"
+                (dateChange)="cambiarFecha($event)"
+              />
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button
+              mat-mini-fab
+              color="accent"
+              (click)="picker.open()"
+              matTooltip="Seleccionar fecha"
+            >
+              <mat-icon aria-hidden="false" aria-label="ayer icon">
+                calendar_today
+              </mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="accent"
+              (click)="diaSiguiente()"
+              matTooltip="Día siguiente"
+            >
+              <mat-icon aria-hidden="false" aria-label="mañana icon">
+                keyboard_arrow_right
+              </mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="warn"
+              (click)="nuevo()"
+              class="ml-5px"
+              matTooltip="Crear Turno"
+            >
+              <mat-icon aria-hidden="false" aria-label="nuevo icon">
+                today
+              </mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="default"
+              (click)="imprimir()"
+              matTooltip="Imprimir Turnos"
+            >
+              <mat-icon aria-hidden="false" aria-label="print icon">
+                print
+              </mat-icon>
+            </button>
+          </mat-toolbar-row>
+        </div>
+      
+    </div>
+  </mat-toolbar>
 
-    <mat-card-content>
+  <mat-card-content>
+    <div class="turnos">
+      <div class="encabezado-turnos" id="encabezado-turnos">
+        <div
+          *ngFor="let column of columns"
+          class="turno-column turno-column-encabezado"
+          [ngStyle]="{ width: widthColumnE }"
+          [id]="column.id"
+        >
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title *ngIf="column.head" class="card-title-turnos">
+                <div class="row">
+                  <div class="col-4">
+                    <img
+                      mat-card-avatar
+                      [src]="column.head.img | imagen"
+                      class="card-img-turnos"
+                    />
+                  </div>
 
-      <div class="turnos">
-        <div class="encabezado-turnos" id="encabezado-turnos">
-          <div *ngFor="let column of columns" 
-              class="turno-column turno-column-encabezado"
-              [ngStyle]="{'width': widthColumnE}"
-              [id]="column.id">
-            <mat-card>
-                <mat-card-header>
-                  <mat-card-title *ngIf="column.head" class="card-title-turnos">
-                  <div class="row">
-                    <div class="col-4">
-                      <img mat-card-avatar [src]="column.head.img | imagen" class="card-img-turnos">
-                    </div>
+                  <div class="col-8">
+                    {{ column.head.apellido }} {{ column.head.nombre }}
+                  </div>
+                </div>
+              </mat-card-title>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
 
-                    <div class="col-8">
-                        
-                        {{ column.head.apellido }} {{ column.head.nombre }}
-                      </div>
-                    </div>
-                  </mat-card-title>
-                </mat-card-header>
-            </mat-card>
+      <div class="detalle-turnos" id="detalle-turnos">
+        <div
+          *ngFor="let column of columns"
+          class="turno-column turno-column-detalle"
+          [ngStyle]="{ width: widthColumnD }"
+          [id]="column.id"
+        >
+          <div *ngFor="let t of column.turnos">
+            <app-card-turno
+              [turno]="t"
+              (actualizar)="cargarTurnos($event)"
+              [ngStyle]="{ width: widthColumnD }"
+            >
+            </app-card-turno>
           </div>
         </div>
-        
-        <div class="detalle-turnos" id="detalle-turnos">
-            <div *ngFor="let column of columns" 
-            class="turno-column turno-column-detalle"
-            [ngStyle]="{'width': widthColumnD}"
-            [id]="column.id">
-              <div *ngFor="let t of column.turnos">
-                  <app-card-turno [turno]="t" (actualizar)="cargarTurnos($event)"></app-card-turno>
-              </div>
-            </div>
-        </div>
+      </div>
 
-          <!-- <div class="separador-turnos"></div>
+      <!-- <div class="separador-turnos"></div>
           <div *ngFor="let t of column.turnos">
             <app-card-turno [turno]="t" (actualizar)="cargarTurnos($event)"></app-card-turno>
           </div> -->
-          
-        
-      </div>
-    </mat-card-content>
-
+    </div>
+  </mat-card-content>
 </mat-card>
 
 <!-- <app-add-turno></app-add-turno> -->
