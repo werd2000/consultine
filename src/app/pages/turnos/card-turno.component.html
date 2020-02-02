@@ -1,67 +1,9 @@
-<mat-card class="mat-card-turnos" [ngStyle]="{'height': turno.duracion * 2 + 'px', 'max-height': turno.duracion * 2 + 'px', 'top': turno.top}" style="position: absolute; width: inherit">
-              
-  <mat-card-header *ngIf="turno" class="turnos-header pointer">
-    <mat-card-title (click)="editarTurno(turno)" class="mat-card-title-turno">
-      <div class="row">
-        <div class="col-12 text-center">
-          {{ turno.horaInicio }}
-        </div>
-      </div>
-    </mat-card-title>
-    <!-- <div (click)="editarTurno(turno)"> -->
-      <!-- <p>Hora: {{ turno.horaInicio }}</p> -->
-      <!-- <p class="text-muted">{{ turno.estado }}</p> -->
-    <!-- </div> -->
-  </mat-card-header>
-
-  <mat-card-content *ngIf="turno.paciente" [ngClass]="turno.estilo">
-    <div class="row">
-
-      <div class="col-turno-avatar">
-        <img mat-card-avatar [src]="turno.paciente.img | imagen" class="card-img-turnos">
-      </div>
-
-      <div class="col-6" style="overflow: hidden;">
-        <!-- <mat-card-title *ngIf="turno.paciente" class="card-title-turnos"> -->
-          <div *ngIf="turno.paciente">
-            {{ turno.paciente.apellido }} {{ turno.paciente.nombre }}
-          </div>
-        <!-- </mat-card-title> -->
-      </div>
-
-      <div class="col-2">
-        <!-- <button mat-button [matMenuTriggerFor]="menuTurno" class="menu-turno"> -->
-          <mat-icon [matMenuTriggerFor]="menuTurno" class="pointer">more_vert</mat-icon>
-        <!-- </button> -->
-        <mat-menu #menuTurno="matMenu">
-          <button mat-menu-item color="warn" aria-label="Eliminar turno" (click)="eliminarTurno(turno)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-menu-item color="warn" aria-label="Turno realizado" (click)="marcarRealizado(turno)">
-            <mat-icon>done</mat-icon>
-          </button>
-        </mat-menu>
-      </div>
-
+<div class="turnos-card turnos-card-pac" [ngClass]="turno.estilo"
+  [ngStyle]="{'height': turno.duracion * 2 + 'px', 'max-height': turno.duracion * 2 + 'px', 'top': turno.top}" style="position: absolute; width: inherit">
+  <div class="row turnos-card-pac-title">
+    <div class="col-12 text-center">
+      {{turno.horaInicio}}
     </div>
+  </div>
 
-    
-    <!-- <div class="w-10">
-      <button mat-button [matMenuTriggerFor]="menuTurno" class="menu-turno">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menuTurno="matMenu">
-        <button mat-menu-item color="warn" aria-label="Eliminar turno" (click)="eliminarTurno(turno)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-menu-item color="warn" aria-label="Turno realizado" (click)="marcarRealizado(turno)">
-          <mat-icon>done</mat-icon>
-        </button>
-      </mat-menu>
-    </div> -->
-  </mat-card-content>
-
-  <!-- <mat-card-actions>      
-  </mat-card-actions> -->
-
-</mat-card>
+</div>

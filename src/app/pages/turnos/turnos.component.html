@@ -1,7 +1,7 @@
 <mat-spinner *ngIf="cargando" style="margin: auto"></mat-spinner>
 
-<mat-card *ngIf="!cargando">
-  <mat-toolbar class="color-bck-turnos ">
+<mat-card *ngIf="!cargando" style="height: 1200px;">
+  <mat-toolbar class="color-bck-turnos">
     <div class="toolbar-turnos">
       <div class="toolbar-turnos-title">
         <mat-toolbar-row>
@@ -9,8 +9,8 @@
         </mat-toolbar-row>
       </div>
           
-          <div class="toolbar-turnos-tools">
-            <mat-toolbar-row>
+          <div class="toolbar-turnos-title">
+            <mat-toolbar-row class="toolbar-turnos-tools">
             <button
               type="button"
               mat-raised-button
@@ -19,45 +19,47 @@
             >
               Hoy
             </button>
-            <button
-              mat-mini-fab
-              color="accent"
-              (click)="diaAnterior()"
-              matTooltip="Día anterior"
-            >
-              <mat-icon aria-hidden="false" aria-label="ayer icon">
-                keyboard_arrow_left
-              </mat-icon>
-            </button>
-            <mat-form-field style="width: 0px">
-              <input
-                matInput
-                [matDatepicker]="picker"
-                placeholder="Choose a date"
-                (dateChange)="cambiarFecha($event)"
-              />
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <button
-              mat-mini-fab
-              color="accent"
-              (click)="picker.open()"
-              matTooltip="Seleccionar fecha"
-            >
-              <mat-icon aria-hidden="false" aria-label="ayer icon">
-                calendar_today
-              </mat-icon>
-            </button>
-            <button
-              mat-mini-fab
-              color="accent"
-              (click)="diaSiguiente()"
-              matTooltip="Día siguiente"
-            >
-              <mat-icon aria-hidden="false" aria-label="mañana icon">
-                keyboard_arrow_right
-              </mat-icon>
-            </button>
+            <div>
+              <button
+                mat-mini-fab
+                color="accent"
+                (click)="diaAnterior()"
+                matTooltip="Día anterior"
+              >
+                <mat-icon aria-hidden="false" aria-label="ayer icon">
+                  keyboard_arrow_left
+                </mat-icon>
+              </button>
+              <mat-form-field style="width: 0px">
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  placeholder="Choose a date"
+                  (dateChange)="cambiarFecha($event)"
+                />
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              <button
+                mat-mini-fab
+                color="accent"
+                (click)="picker.open()"
+                matTooltip="Seleccionar fecha"
+              >
+                <mat-icon aria-hidden="false" aria-label="ayer icon">
+                  calendar_today
+                </mat-icon>
+              </button>
+              <button
+                mat-mini-fab
+                color="accent"
+                (click)="diaSiguiente()"
+                matTooltip="Día siguiente"
+              >
+                <mat-icon aria-hidden="false" aria-label="mañana icon">
+                  keyboard_arrow_right
+                </mat-icon>
+              </button>
+            </div>
             <button
               mat-mini-fab
               color="warn"
@@ -86,58 +88,63 @@
   </mat-toolbar>
 
   <mat-card-content>
-    <div class="turnos">
-      <div class="encabezado-turnos" id="encabezado-turnos">
-        <div
-          *ngFor="let column of columns"
-          class="turno-column turno-column-encabezado"
-          [ngStyle]="{ width: widthColumnE }"
-          [id]="column.id"
-        >
-          <mat-card>
-            <mat-card-header>
-              <mat-card-title *ngIf="column.head" class="card-title-turnos">
-                <div class="row">
-                  <div class="col-4">
-                    <img
-                      mat-card-avatar
-                      [src]="column.head.img | imagen"
-                      class="card-img-turnos"
-                    />
-                  </div>
+    <div id="turnos">
+      <div *ngFor="let column of columns"
+           class="turno-column"
+           [ngStyle]="{ width: widthColumnE }"
+           [id]="column.id">
 
+           <div class="turnos-card turnos-card-prof">
+            <div class="row">
+              <div class="col-4">
+                <img [src]="column.head.img | imagen" class="turnos-thunb"/>
+              </div>
+              <div class="col-8">
+                {{ column.head.apellido }} {{ column.head.nombre }}
+              </div>
+            </div>
+           </div>
+
+           <div class="turnos-detalle" [ngClass]="{ 'width': widthColumnD}">
+             <!-- <ng-content #name  style="width: -webkit-fill-available;"> -->
+
+               <div *ngFor="let turno of column.turnos" class="turnos-card turnos-card-pac" [ngClass]="turno.estilo"
+                 [ngStyle]="{'height': turno.duracion * 2 + 'px', 'max-height': turno.duracion * 2 + 'px', 'top': turno.top, 'width': widthColumnD}" style="position: absolute">
+                 <div class="row turnos-card-pac-title pointer" (click)="editarTurno(turno)">
+                   <div class="col-12 text-center">
+                     {{turno.horaInicio}}
+                   </div>
+                 </div>
+                 <div class="row turnos-card-pac-content" [ngStyle]="{'height': turno.duracion * 2 - 20 + 'px'}" *ngIf="turno.paciente">
+                  <div class="col-3">
+                    <img [src]="turno.paciente.img | imagen" class="turnos-thunb-pac"/>
+                  </div>
                   <div class="col-8">
-                    {{ column.head.apellido }} {{ column.head.nombre }}
+                    {{ turno.paciente.apellido }} {{ turno.paciente.nombre }}
                   </div>
-                </div>
-              </mat-card-title>
-            </mat-card-header>
-          </mat-card>
-        </div>
-      </div>
+                  <div class="col-1 turnos-card-pac-content-menu ">
+                    <mat-icon [matMenuTriggerFor]="menuTurno" class="pointer">more_vert</mat-icon>
 
-      <div class="detalle-turnos" id="detalle-turnos">
-        <div
-          *ngFor="let column of columns"
-          class="turno-column turno-column-detalle"
-          [ngStyle]="{ width: widthColumnD }"
-          [id]="column.id"
-        >
-          <div *ngFor="let t of column.turnos">
-            <app-card-turno
-              [turno]="t"
-              (actualizar)="cargarTurnos($event)"
-              [ngStyle]="{ width: widthColumnD }"
-            >
-            </app-card-turno>
-          </div>
-        </div>
-      </div>
+                    <mat-menu #menuTurno="matMenu">
+                      <button mat-menu-item color="warn" aria-label="Eliminar turno" (click)="eliminarTurno(turno)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                      <button mat-menu-item color="warn" aria-label="Turno realizado" (click)="marcarRealizado(turno)">
+                        <mat-icon>done</mat-icon>
+                      </button>
+                    </mat-menu>
+                  </div>
+                 </div>
+               </div>
 
-      <!-- <div class="separador-turnos"></div>
-          <div *ngFor="let t of column.turnos">
-            <app-card-turno [turno]="t" (actualizar)="cargarTurnos($event)"></app-card-turno>
-          </div> -->
+             <!-- </ng-content> -->
+             
+              <!-- <app-card-turno [turno]="t" (actualizar)="cargarTurnos($event)"
+               *ngFor="let t of column.turnos" style="width: -webkit-fill-available;">
+              </app-card-turno> -->
+           </div>
+           
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

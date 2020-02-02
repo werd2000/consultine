@@ -1,4 +1,4 @@
-import { LOCALE_ID, Component, OnInit, OnDestroy } from '@angular/core';
+import { LOCALE_ID, Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { PersonalService, TurnosService, UsuarioService, PacienteService, ModalTurnoService } from 'src/app/services/service.index';
 import { EmpleadoProfile } from 'src/app/models/empleado.model';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS } from 'src/app/config/config';
 import { AddTurnoQuickComponent } from './add-turno-quick.component';
+import { Turno } from 'src/app/models/turno.model';
 
 @Component({
   selector: 'app-turnos',
@@ -22,6 +23,7 @@ import { AddTurnoQuickComponent } from './add-turno-quick.component';
 })
 export class TurnosComponent implements OnInit, OnDestroy {
 
+  @Output() actualizar = new EventEmitter();
   cargando: boolean;
   columns = [];
   widthColumnE: string;
@@ -72,11 +74,29 @@ export class TurnosComponent implements OnInit, OnDestroy {
                       if (x > y) {return 1; }
                       return 0;
                   });
-  
+
                   await this.turnos.forEach(
-                    this.turnosFunction.paraMostrar.bind(this)
+                    // this.turnosFunction.paraMostrar.bind(this)
+                    this.turnosFunction.configuraPaciente.bind(this)
                   );
-  
+                  await this.turnos.forEach(
+                    // this.turnosFunction.paraMostrar.bind(this)
+                    this.turnosFunction.configuraProfesional.bind(this)
+                  );
+                  await this.turnos.forEach(
+                    this.turnosFunction.configuraEstado.bind(this)
+                  );
+                  await this.turnos.forEach(
+                    this.turnosFunction.configuraUsuario.bind(this)
+                  );
+                  await this.turnos.forEach(
+                    this.turnosFunction.calcularDuracion.bind(this)
+                  );
+                  await this.turnos.forEach(
+                    this.turnosFunction.configurarTop.bind(this)
+                  );
+                  console.log(this.turnos);
+
                   this.columns.push({
                       head: profesional,
                       campo: profesional.nombre,
@@ -88,13 +108,71 @@ export class TurnosComponent implements OnInit, OnDestroy {
           }
         });
 
-        let elem = document.getElementById('encabezado-turnos');
-        this.widthColumnE = (elem.offsetWidth / this.cantProfesionales) + 'px';
-        elem = document.getElementById('detalle-turnos');
-        this.widthColumnD = (elem.offsetWidth / this.cantProfesionales) - 1 + 'px';
+        const elem = document.getElementById('turnos');
+        // this.widthColumnE = (elem.offsetWidth / this.cantProfesionales) + 'px';
+        this.widthColumnE = (100 / this.cantProfesionales) + '%';
+        const elemT = document.getElementById('turnos');
+        this.widthColumnD = (elemT.offsetWidth / this.cantProfesionales) - 1 + 'px';
+        // this.widthColumnD = elemT.offsetWidth + 'px';
         this.cargando = false;
+
       })
     );
+  }
+
+  editarTurno(t: Turno) {
+    const arrayT = [t];
+    const dialogRef = this.dialog.open(AddTurnoComponent, {
+      width: '50%',
+      data: arrayT[0]
+    });
+    dialogRef.afterClosed().subscribe(result => {
+        this.actualizar.emit(true);
+        console.log(result);
+        this.cargarTurnos();
+    });
+  }
+
+  eliminarTurno(t: any) {
+    sweetAlert({
+      title: 'Atención, está por borrar datos',
+      text: 'Una vez borrados, no se podrán recuperar',
+      icon: 'warning',
+      buttons: ['Calcelar', 'Borrar'],
+      dangerMode: true
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        this.turnosService.deleteTurno(t)
+        .then(resp => {
+            sweetAlert ('Datos borrados', `Los datos del turno ${ t.paciente.apellido } se borraron correctamente`, 'success');
+            // this.actualizar.emit(true);
+            this.cargarTurnos();
+        });
+      }
+    });
+  }
+
+  marcarRealizado(t: any) {
+    const turno = {
+      _id : t._id,
+      actualizado : t.actualizado,
+      area : t.area,
+      creacion : t.creacion,
+      creadoPor : t.creadoPor,
+      estado : 'REALIZADO',
+      fechaFin : t.fechaFin,
+      fechaInicio : t.fechaInicio,
+      horaFin : t.horaFin,
+      horaInicio : t.horaInicio,
+      idPaciente : t.idPaciente,
+      idProfesional : t.idProfesional,
+      observaciones : t.observaciones,
+      repetir : t.repetir,
+    };
+    // console.log(turno);
+    this.turnosService.updateTurno(turno);
+    this.cargarTurnos();
   }
 
 
